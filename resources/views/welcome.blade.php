@@ -65,11 +65,9 @@
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
-                <div class="top-right links">
                     @auth
-                        @include('admin.dashboard')
+                        @extends('layout.home')
                     @else
                         <a href="{{ route('login') }}">Login</a>
 
@@ -79,9 +77,6 @@
                     @endauth
                 </div>
             @endif
-
-            </div>
-        </div>
 
     </body>
 </html>
