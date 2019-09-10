@@ -12,6 +12,9 @@
         <link rel="stylesheet" href="https:/fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
         <link rel="stylesheet" href="{{asset('/bower_components/admin-lte/dist/css/AdminLTE.min.css')}}">
         <link rel="stylesheet" href="{{asset('/bower_components/admin-lte/dist/css/skins/_all-skins.min.css')}}">
+        <link rel="stylesheet" href="{{asset('/bower_components/bower_components/select2/dist/css/select2.min.css')}}">
+        
+
     </head>
     <body class="skin-blue fixed sidebar-mini sidebar-mini-expand-feature">
         <div class="wrapper">
@@ -87,14 +90,14 @@
                     </form>
                     <ul class="sidebar-menu" data-widget="tree">
                         <li class="header"></li>
-                            <li class="active">
+                            <li class="">
                                 <a href="{{url('/home')}}">
                                     <i class="fa fa-dashboard"></i> 
                                     <span>Dashboard</span>
                                 </a>
                             </li>
                             @can('isAdmin')
-                            <li class="">
+                            <li class="active">
                                 <a href="{{url('/user')}}">
                                     <i class="fa fa-users"></i> 
                                     <span>Users</span>
@@ -125,7 +128,84 @@
                     </ol>
                 </section>
                 <section class="content">
-
+                    <div class="box box-success">
+                        <div class="box-body">
+                            <form id="temaplate_form" name="temaplate_form" method="post">
+                                <table id="temaplate_table" width="100%" cellspacing="10" cellpadding="10" class="table table-striped">
+                                   
+                                    <tr class="form-group">
+                                        <td >Name <sup class="mandatory">*</sup></td>
+                                        <td>:</td>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-xs-6 form-input">
+                                                    <input name="name" id="name" type="text" required='required' placeholder="Enter Name" class="validate[required] text-input form-control" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="form-group">
+                                        <td >Email <sup class="mandatory">*</sup></td>
+                                        <td>:</td>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-xs-6 form-input">
+                                                    <input name="email" id="email" type="email" required='required' placeholder="Enter Email Address" class="validate[required] text-input form-control" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="form-group">
+                                        <td >Password <sup class="mandatory">*</sup></td>
+                                        <td>:</td>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-xs-6 form-input">
+                                                    <input name="password" id="password" type="text" required='required' placeholder="Enter users password" class="validate[required] text-input form-control" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="form-group">
+                                        <td >User Type <sup class="mandatory">*</sup></td>
+                                        <td>:</td>
+                                        <td>
+                                            <div class="row" >
+                                                <div class="col-xs-6 form-input">
+                                                <div class="form-group">
+                                                    <select class="form-control select2" id="user_type" style="width: 100%;">
+                                                        <option selected="selected">Admin</option>
+                                                        <option>Employee</option>
+                                                    </select>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="margin-top: 10px;">
+                                                <div class="col-xs-6 form-input" id="other_category_div" style="display:none;">
+                                                    <input name="other_category" id="other_category" type="text" placeholder="Enter Template Category" class="text-input form-control" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                                </table>
+                                <div class="box-footer clearfix remove-border-top">
+                                    <div>
+                                        <table width="100%">
+                                            <tr>
+                                                <td align="center">
+                                                    <input type="submit" value="Save and Continue" class="btn btn-primary" title="Save" id="save">
+                                                    <input type="button" value="Cancel" class="btn btn-secondary" title="Cancel" id="cancel">
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-4 col-md-offset-4" id="error_message" style="margin-top: 25px;"> </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </section>
             </div>
             <!-- End of Content -->
@@ -149,5 +229,60 @@
         <script src="{{asset('/bower_components/admin-lte/plugins/jvectormap/jquery-jvectormap-world-mill-en.js')}}" type="text/javascript"></script>
         <script src="{{asset('/bower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}" type="text/javascript"></script>
         <script src="{{asset('/bower_components/chart.js/Chart.js')}}" type="text/javascript"></script>
+        <script src="{{asset('/bower_components/select2/dist/js/select2.full.min.js')}}" type="text/javascript"></script>
+        <script>
+        $(document).ready(function(){
+
+            $('#temaplate_form').submit(function (event) {
+                event.preventDefault();
+                var name = $('#name');
+                var email = $('#email');
+                var password = $('#password');
+                var user_type  = $("input[name='user_type']:checked").val();
+                if (thisForm.validationEngine('validate')) {
+                    disableButton();
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ url("/user/register/data") }}',
+                        data: {
+                            name : name,
+                            email          : email,
+                            password          : password,
+                            user_type       : user_type,
+                            _token        : '{!! csrf_token() !!}'
+                        },
+                        dataType: 'json',
+                        encode: true
+                    })
+                    .done(function (response) {
+                        enableButton();
+                        swal({
+                            title: "Success",
+                            text: response.message,
+                            type: "success",
+                            allowEscapeKey: false
+                        },
+                        function() {
+                            window.location.href="{!! url('/admin/sms-templates') !!}";
+                        });
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        enableButton();
+                        var errors = jqXHR.responseJSON.errors;
+                        if(errors){
+                            var parentDiv = '<div class="alert alert-warning  col-md-12"><ul>';
+                            $.each(errors, function($key, $message) {
+                                if($message != null){
+                                    parentDiv += '<li>' + $message + '</li>';
+                                }
+                            });
+                            parentDiv += '</ul></div>';
+                            alertDiv.html(parentDiv);
+                            return false;
+                        }
+                    });
+                }
+            });
+    </script>
     </body>
 <html>

@@ -22,8 +22,14 @@ Auth::routes();
         if(Auth::check()) {
             return redirect()->route('home');
         }
-        return view('auth.login');
+        return view('auth.register');
     })->name('home');
 
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/user', 'HomeController@user')->name('user')->middleware('can:isAdmin');
+Route::get('/register',function(){
+    return view('admin.register');
+})->middleware('can:isAdmin');
+Route::post('/user/register/data','HomeController@data')->middleware('can@isAdmin');

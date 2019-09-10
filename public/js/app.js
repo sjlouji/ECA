@@ -49324,6 +49324,17 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./public/bower_components/bootstrap/less/forms.less":
+/*!***********************************************************!*\
+  !*** ./public/bower_components/bootstrap/less/forms.less ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed (from ./node_modules/css-loader/index.js):\nModuleBuildError: Module build failed (from ./node_modules/less-loader/dist/cjs.js):\n\n\n  padding: 0;\n  margin-bottom: @line-height-computed;\n               ^\nVariable @line-height-computed is undefined\n      in /var/www/public/bower_components/bootstrap/less/forms.less (line 26, column 17)\n    at /var/www/node_modules/webpack/lib/NormalModule.js:313:20\n    at /var/www/node_modules/loader-runner/lib/LoaderRunner.js:367:11\n    at /var/www/node_modules/loader-runner/lib/LoaderRunner.js:233:18\n    at context.callback (/var/www/node_modules/loader-runner/lib/LoaderRunner.js:111:13)\n    at processTicksAndRejections (internal/process/task_queues.js:93:5)");
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -49501,13 +49512,14 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ 0:
-/*!*************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ***!
-  \*************************************************************/
+/*!*****************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./public/bower_components/bootstrap/less/forms.less ./resources/sass/app.scss ***!
+  \*****************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! /var/www/resources/js/app.js */"./resources/js/app.js");
+__webpack_require__(/*! /var/www/public/bower_components/bootstrap/less/forms.less */"./public/bower_components/bootstrap/less/forms.less");
 module.exports = __webpack_require__(/*! /var/www/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
