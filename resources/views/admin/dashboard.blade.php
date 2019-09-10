@@ -45,7 +45,15 @@
                                             <a href="#" class="btn btn-default btn-flat">Profile</a>
                                         </div>
                                         <div class="pull-right">
-                                            <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                            <a class="dropdown-item btn btn-default btn-flat" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                                        document.getElementById('logout-form').submit();">
+                                            {{ __('Logout') }}
+                                        </a>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            @csrf
+                                        </form>
                                         </div>
                                     </li>
                                 </ul>
@@ -85,12 +93,14 @@
                                     <span>Dashboard</span>
                                 </a>
                             </li>
+                            @can('isAdmin')
                             <li class="treeview">
                                 <a href="#">
                                     <i class="fa fa-users"></i> 
                                     <span>Users</span>
                                 </a>
                             </li>
+                            @endcan
                             <li class="treeview">
                                 <a href="#">
                                     <i class="fa fa-dashboard"></i> 
