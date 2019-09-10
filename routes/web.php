@@ -17,5 +17,13 @@ Route::get('/', function () {
 
 Auth::routes();
 
+    // Check if user is logged in
+    Route::get('/', function () {
+        if(Auth::check()) {
+            return redirect()->route('home');
+        }
+        return view('auth.login');
+    })->name('home');
+
+
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/login', 'HomeController@login');
