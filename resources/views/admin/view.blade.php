@@ -87,14 +87,14 @@
                     </form>
                     <ul class="sidebar-menu" data-widget="tree">
                         <li class="header"></li>
-                            <li class="active">
+                            <li class="">
                                 <a href="{{url('/home')}}">
                                     <i class="fa fa-dashboard"></i> 
                                     <span>Dashboard</span>
                                 </a>
                             </li>
                             @can('isAdmin')
-                            <li class="">
+                            <li class="active">
                                 <a href="{{url('/user')}}">
                                     <i class="fa fa-users"></i> 
                                     <span>Users</span>
@@ -125,7 +125,62 @@
                     </ol>
                 </section>
                 <section class="content">
-
+                    <div class="box box-success">
+                    <div style="margin-top: 10px; margin-right: 10px;margin-bottom: 10px">
+                           
+                                </div>
+                        <div class="box-body">
+                            <table id="temaplate_table" width="100%" cellspacing="10" cellpadding="" class="table table-striped">
+                                <tr class="form-group">
+                                    <td >Id </td>
+                                    <td>:</td>
+                                    <td>
+                                        {{ $user->id }}
+                                    </td>
+                                </tr>
+                                
+                                <tr class="form-group">
+                                    <td >Name </td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $user->name }}
+                                    </td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td >Email </td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $user->email }}
+                                    </td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td >User type </td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $user->user_type }}
+                                    </td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td >Created At </td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $user->created_at }}
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="box-footer clearfix remove-border-top">
+                                <div>
+                                    <table width="100%">
+                                        <tr>
+                                            <td align="center">
+                                                <a href="{{url('/user')}}"><input type="button" value="Back" title="Back"  class="btn btn-danger"></a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </section>
             </div>
             <!-- End of Content -->

@@ -12,6 +12,47 @@
         <link rel="stylesheet" href="https:/fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
         <link rel="stylesheet" href="{{asset('/bower_components/admin-lte/dist/css/AdminLTE.min.css')}}">
         <link rel="stylesheet" href="{{asset('/bower_components/admin-lte/dist/css/skins/_all-skins.min.css')}}">
+        <link rel="stylesheet" href="{{asset('/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
+        <link rel="stylesheet" href="{{asset('/bower_components/select2/dist/css/select2.min.css')}}">
+        <style>
+        tfoot{
+			    display: table-header-group;
+			    width:100px;
+			}
+		tfoot input {
+	        width: 100%;
+	        padding: 3px;
+	        box-sizing: border-box;
+   	 	}
+            ::-webkit-input-placeholder {
+            font-size: 25px;
+            }
+
+            :-moz-placeholder { /* Firefox 18- */
+                font-size: 25px;
+            }
+
+            ::-moz-placeholder {  /* Firefox 19+ */
+                font-size: 25px;
+            }
+
+            /* Overriding styles */
+
+            ::-webkit-input-placeholder {
+            font-size: 13px!important;
+            }
+
+            :-moz-placeholder { /* Firefox 18- */
+                font-size: 13px!important;
+            }
+            ::-moz-placeholder {  /* Firefox 19+ */
+                font-size: 13px!important;
+            }
+            #example1_filter 
+            {
+                display:none;
+            }
+        </style>
     </head>
     <body class="skin-blue fixed sidebar-mini sidebar-mini-expand-feature">
         <div class="wrapper">
@@ -87,14 +128,14 @@
                     </form>
                     <ul class="sidebar-menu" data-widget="tree">
                         <li class="header"></li>
-                            <li class="active">
+                            <li class="">
                                 <a href="{{url('/home')}}">
                                     <i class="fa fa-dashboard"></i> 
                                     <span>Dashboard</span>
                                 </a>
                             </li>
                             @can('isAdmin')
-                            <li class="">
+                            <li class="active">
                                 <a href="{{url('/user')}}">
                                     <i class="fa fa-users"></i> 
                                     <span>Users</span>
@@ -121,11 +162,46 @@
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="{{url('/home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">Dashboard</li>
+                        <li class="active">Users</li>
                     </ol>
                 </section>
                 <section class="content">
+                <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
 
+                                <div class="box-header">
+                                    <h3 class="box-title">Users</h3>
+                                    <button onclick="window.open('{{url('/register')}}')" type="button" class="btn btn-block btn-primary btn-normal" style="float:right;width:100px"><span class="fa fa-plus"></span> Add a user</button>
+                                </div>
+                                <div class="box-body">
+                                    <table id="example1" class="table table-bordered table-striped ">
+                                        <thead>
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>User Type</th>
+                                                <th>Created At</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                                
+                                            <tfoot>
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>User Type</th>
+                                                <th>Created At</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                </div>
                 </section>
             </div>
             <!-- End of Content -->
@@ -149,5 +225,58 @@
         <script src="{{asset('/bower_components/admin-lte/plugins/jvectormap/jquery-jvectormap-world-mill-en.js')}}" type="text/javascript"></script>
         <script src="{{asset('/bower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}" type="text/javascript"></script>
         <script src="{{asset('/bower_components/chart.js/Chart.js')}}" type="text/javascript"></script>
+        <script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+        <script src="{{asset('/bower_components/select2/dist/js/select2.full.min.js')}}" type="text/javascript"></script>
+
     </body>
+    <script>
+             $(document).ready(function(){
+                        var table = $('#example1').DataTable({
+                            "processing" : true,
+                            "serverSide" : true,
+                            paging: true,
+                            bFilter: true,
+                            ordering: true,
+                            "ajax":{
+                                "url": "{{url("user/data")}}",
+                            },
+                            "columnDefs": [
+                                { "orderable": false, "targets":[5] },
+                            ],
+                            "columns":[
+					            {"data":"id", "name":"id"},
+                                {"data":"name", "name":"name"},
+					            {"data":"email", "name":"email"},
+					            {"data":"user_type", "name":"user_type"},
+					            {"data":"created_at", "name":"created_at"},
+                                {"data":null,
+                                    "render":function(data,type,row)
+                                    {
+                                        var templateId = data.id;
+                                        return'<a title="View Template" target="_blank" class="" href="{{ url("user/register") }}/'+templateId+'/view" style="color:#1E1E1E"><i class="glyphicon glyphicon-eye-open"></i> </a>';
+                                    }
+                                }
+                            ]
+
+                        });
+                        $('#example1 tfoot th ').each( function () {
+                            var title = $(this).text();
+                            $(this).html( '<input type="text" class="form-control" placeholder="Search '+title+'" />' );
+			            } );
+                        table.columns().every( function () {
+                            var that = this;
+                            $( 'input', this.footer() ).on( 'keyup change', function () {
+                                if ( that.search() !== this.value ) {
+                                    that
+                                        .search( this.value )
+                                        .draw();
+                                }
+                            } );
+                        } );
+
+                });
+
+</script>
+
 <html>

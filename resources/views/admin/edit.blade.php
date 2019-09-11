@@ -87,14 +87,14 @@
                     </form>
                     <ul class="sidebar-menu" data-widget="tree">
                         <li class="header"></li>
-                            <li class="active">
+                            <li class="">
                                 <a href="{{url('/home')}}">
                                     <i class="fa fa-dashboard"></i> 
                                     <span>Dashboard</span>
                                 </a>
                             </li>
                             @can('isAdmin')
-                            <li class="">
+                            <li class="active">
                                 <a href="{{url('/user')}}">
                                     <i class="fa fa-users"></i> 
                                     <span>Users</span>
@@ -125,7 +125,78 @@
                     </ol>
                 </section>
                 <section class="content">
+                    <div class="box box-success">
+                    <div class="box-body">
+                        <form id="temaplate_form" name="temaplate_form" method="post">
+                            <table id="temaplate_table" width="100%" cellspacing="10" cellpadding="10" class="table table-striped">
+                            <tr class="form-group">
+                                        <td >Name <sup class="mandatory">*</sup></td>
+                                        <td>:</td>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-xs-6 form-input">
+                                                    <input name="name" id="name" type="text" required='required' value="{{$user->name}}" placeholder="Enter Name" class="validate[required] text-input form-control" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="form-group">
+                                        <td >Email <sup class="mandatory">*</sup></td>
+                                        <td>:</td>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-xs-6 form-input">
+                                                    <input name="email" id="email" type="email" required='required' value="{{$user->email}}" placeholder="Enter Email Address" class="validate[required] text-input form-control" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                   
+                                    <tr class="form-group">
+                                        <td >User Type <sup class="mandatory">*</sup></td>
+                                        <td>:</td>
+                                        <td>
+                                            <div class="row" >
+                                                <div class="col-xs-6 form-input">
+                                                <div class="form-group">
+                                                    <select class="form-control select2" id="user_type" name="user_type" style="width: 100%;">
+                                                        <option value="admin">Admin</option>
+                                                        <option selected="selected" value="emp">Employee</option>
+                                                    </select>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="margin-top: 10px;">
+                                                <div class="col-xs-6 form-input" id="other_category_div" style="display:none;">
+                                                    <input name="other_category" id="other_category" type="text" placeholder="Enter Template Category" class="text-input form-control" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <div class="box-footer clearfix remove-border-top">
+                                    <div>
+                                        <table width="100%">
+                                            <tr>
+                                                <td align="center">
+                                                    <input type="submit" value="Save and Continue" class="btn btn-primary" title="Save" id="save">
+                                                    <input type="button" value="Cancel" class="btn btn-secondary" title="Cancel" id="cancel" onclick="window.location='{{url('/user')}}'">
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-4 col-md-offset-4" id="error_message" style="margin-top: 25px;"> </div>
+                                </div>
+                                    </table>
+                                    
+                                </div>
+                                <div class="col-md-4 col-md-offset-4" id="error_message" style="margin-top: 25px;"> </div>
+                            </div>
+                        </form>
+                    </div>
+                    </div>
+                    <div>
 
+                    </div>
                 </section>
             </div>
             <!-- End of Content -->
@@ -149,5 +220,65 @@
         <script src="{{asset('/bower_components/admin-lte/plugins/jvectormap/jquery-jvectormap-world-mill-en.js')}}" type="text/javascript"></script>
         <script src="{{asset('/bower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}" type="text/javascript"></script>
         <script src="{{asset('/bower_components/chart.js/Chart.js')}}" type="text/javascript"></script>
+
+        <script>
+        $(document).ready(function(){
+                $('#temaplate_form').submit(function (event) {
+                    event.preventDefault();
+                    var name = $('#name').val();
+                    var email = $('#email').val();
+                    var user_type  = $('#user_type').val();
+                    var alertDiv = $('#error_message');
+
+                    disableButton();
+                        $.ajax({
+                            type: 'POST',
+                            url: '{{ url("/user/register/storeUpdate") }}',
+                            data: {
+                                name : name,
+                                email          : email,
+                                user_type       : user_type,
+                                _token        : '{!! csrf_token() !!}'
+                            },
+                            dataType: 'json',
+                            encode: true
+                        })
+                        .done(function (response) {
+                            enableButton();
+                            swal({
+                                title: "Success",
+                                text: response.message,
+                                type: "success",
+                                allowEscapeKey: false
+                            },
+                            function() {
+                                window.location.href="{!! url('/user') !!}";
+                            });
+                        })
+                
+                        .fail(function (jqXHR, textStatus, errorThrown) {
+                            enableButton();
+                            var errors = errorThrown;
+                            console.log(errorThrown);
+                                var parentDiv = '<div class="alert alert-error alert-dismissible  col-md-12"><ul>  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
+                                        parentDiv += '<li>' + errorThrown + '. User name Exits it seems'+'</li>';
+                                parentDiv += '</ul></div>';
+                                alertDiv.html(parentDiv);
+                        });
+                });
+                function disableButton() {
+                    $("#save").val("Processing...");
+                    $('#cancel').bind('click', function(e){
+                        e.preventDefault();
+                    });
+                }
+                function enableButton() {
+                    $("#save").val("Save and Continue");
+                    $('#cancel').unbind('click');
+                }
+        });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
     </body>
 <html>
