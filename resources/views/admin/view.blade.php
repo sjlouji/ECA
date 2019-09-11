@@ -90,7 +90,7 @@
                             <li class="">
                                 <a href="{{url('/home')}}">
                                     <i class="fa fa-dashboard"></i> 
-                                    <span>Dashboard</span>
+                                    <span>Users</span>
                                 </a>
                             </li>
                             @can('isAdmin')
@@ -102,7 +102,13 @@
                             </li>
                             @endcan
                             <li class="">
-                                <a href="{{url('/user')}}">
+                                <a href="{{url('/department')}}">
+                                    <i class="fa fa-dashboard"></i> 
+                                    <span>Department</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="{{url('/admission')}}">
                                     <i class="fa fa-dashboard"></i> 
                                     <span>Admission</span>
                                 </a>

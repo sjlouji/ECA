@@ -87,7 +87,7 @@
                     </form>
                     <ul class="sidebar-menu" data-widget="tree">
                         <li class="header"></li>
-                            <li class="active">
+                            <li class="">
                                 <a href="{{url('/home')}}">
                                     <i class="fa fa-dashboard"></i> 
                                     <span>Dashboard</span>
@@ -107,7 +107,7 @@
                                     <span>Department</span>
                                 </a>
                             </li>
-                            <li class="">
+                            <li class="active">
                                 <a href="{{url('/admission')}}">
                                     <i class="fa fa-dashboard"></i> 
                                     <span>Admission</span>
