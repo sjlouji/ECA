@@ -254,7 +254,7 @@
                                     "render":function(data,type,row)
                                     {
                                         var templateId = data.id;
-                                        return'<a title="View Template" target="_blank" class="" href="{{ url("user/register") }}/'+templateId+'/view" style="color:#1E1E1E"><i class="glyphicon glyphicon-eye-open"></i> <a title="Edit Template" target="_blank" class="" href="{{ url("user/register") }}/'+templateId+'/edit"><i class="glyphicon glyphicon-edit" style="color:#1E1E1E"></i> </a></a>';
+                                        return'<a title="View Template" target="_blank" class="" href="{{ url("user/register") }}/'+templateId+'/view" style="color:#1E1E1E"><i class="glyphicon glyphicon-eye-open"></i> </a>';
                                     }
                                 }
                             ]

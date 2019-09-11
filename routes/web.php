@@ -37,5 +37,6 @@ Route::post('/user/register/store','RegisterNewUserController@store')->middlewar
 Route::get('/user/data', [ 'as' => 'user.data', 'uses' => 'RegisterNewUserController@data'])->middleware('can:isAdmin');
 Route::get('/user/register/{id}/view','RegisterNewUserController@view')->middleware('can:isAdmin');
 Route::get('/user/register/{id}/edit','RegisterNewUserController@edit')->middleware('can:isAdmin');
+Route::post('/user/register/storeUpdate','RegisterNewUserController@storeUpdate')->middleware('can:isAdmin');
 
 // User Routes Ends

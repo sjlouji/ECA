@@ -160,8 +160,8 @@
                                                 <div class="col-xs-6 form-input">
                                                 <div class="form-group">
                                                     <select class="form-control select2" id="user_type" name="user_type" style="width: 100%;">
-                                                        <option selected="selected" value="admin">Admin</option>
-                                                        <option value="emp">Employee</option>
+                                                        <option value="admin">Admin</option>
+                                                        <option selected="selected" value="emp">Employee</option>
                                                     </select>
                                                 </div>
                                                 </div>
@@ -220,5 +220,65 @@
         <script src="{{asset('/bower_components/admin-lte/plugins/jvectormap/jquery-jvectormap-world-mill-en.js')}}" type="text/javascript"></script>
         <script src="{{asset('/bower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}" type="text/javascript"></script>
         <script src="{{asset('/bower_components/chart.js/Chart.js')}}" type="text/javascript"></script>
+
+        <script>
+        $(document).ready(function(){
+                $('#temaplate_form').submit(function (event) {
+                    event.preventDefault();
+                    var name = $('#name').val();
+                    var email = $('#email').val();
+                    var user_type  = $('#user_type').val();
+                    var alertDiv = $('#error_message');
+
+                    disableButton();
+                        $.ajax({
+                            type: 'POST',
+                            url: '{{ url("/user/register/storeUpdate") }}',
+                            data: {
+                                name : name,
+                                email          : email,
+                                user_type       : user_type,
+                                _token        : '{!! csrf_token() !!}'
+                            },
+                            dataType: 'json',
+                            encode: true
+                        })
+                        .done(function (response) {
+                            enableButton();
+                            swal({
+                                title: "Success",
+                                text: response.message,
+                                type: "success",
+                                allowEscapeKey: false
+                            },
+                            function() {
+                                window.location.href="{!! url('/user') !!}";
+                            });
+                        })
+                
+                        .fail(function (jqXHR, textStatus, errorThrown) {
+                            enableButton();
+                            var errors = errorThrown;
+                            console.log(errorThrown);
+                                var parentDiv = '<div class="alert alert-error alert-dismissible  col-md-12"><ul>  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
+                                        parentDiv += '<li>' + errorThrown + '. User name Exits it seems'+'</li>';
+                                parentDiv += '</ul></div>';
+                                alertDiv.html(parentDiv);
+                        });
+                });
+                function disableButton() {
+                    $("#save").val("Processing...");
+                    $('#cancel').bind('click', function(e){
+                        e.preventDefault();
+                    });
+                }
+                function enableButton() {
+                    $("#save").val("Save and Continue");
+                    $('#cancel').unbind('click');
+                }
+        });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
     </body>
 <html>

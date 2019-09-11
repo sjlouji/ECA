@@ -127,10 +127,7 @@
                 <section class="content">
                     <div class="box box-success">
                     <div style="margin-top: 10px; margin-right: 10px;margin-bottom: 10px">
-                                    <div class="content-top pull-right" style="margin-bottom: 10px">
-                                            <span class="glyphicon glyphicon-edit"></span> Edit 
-                                        </a>
-                                    </div>
+                           
                                 </div>
                         <div class="box-body">
                             <table id="temaplate_table" width="100%" cellspacing="10" cellpadding="" class="table table-striped">
