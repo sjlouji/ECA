@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Licet</title>
+        <title>Licet | Department</title>
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="stylesheet" href="{{asset('/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
         <link rel="stylesheet" href="{{asset('/bower_components/font-awesome/css/font-awesome.min.css')}}">
@@ -12,6 +12,47 @@
         <link rel="stylesheet" href="https:/fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
         <link rel="stylesheet" href="{{asset('/bower_components/admin-lte/dist/css/AdminLTE.min.css')}}">
         <link rel="stylesheet" href="{{asset('/bower_components/admin-lte/dist/css/skins/_all-skins.min.css')}}">
+        <link rel="stylesheet" href="{{asset('/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
+        <link rel="stylesheet" href="{{asset('/bower_components/select2/dist/css/select2.min.css')}}">
+        <style>
+        tfoot{
+			    display: table-header-group;
+			    width:100px;
+			}
+		tfoot input {
+	        width: 100%;
+	        padding: 3px;
+	        box-sizing: border-box;
+   	 	}
+            ::-webkit-input-placeholder {
+            font-size: 25px;
+            }
+
+            :-moz-placeholder { /* Firefox 18- */
+                font-size: 25px;
+            }
+
+            ::-moz-placeholder {  /* Firefox 19+ */
+                font-size: 25px;
+            }
+
+            /* Overriding styles */
+
+            ::-webkit-input-placeholder {
+            font-size: 13px!important;
+            }
+
+            :-moz-placeholder { /* Firefox 18- */
+                font-size: 13px!important;
+            }
+            ::-moz-placeholder {  /* Firefox 19+ */
+                font-size: 13px!important;
+            }
+            #example1_filter 
+            {
+                display:none;
+            }
+        </style>
     </head>
     <body class="skin-blue fixed sidebar-mini sidebar-mini-expand-feature">
         <div class="wrapper">
@@ -87,7 +128,7 @@
                     </form>
                     <ul class="sidebar-menu" data-widget="tree">
                         <li class="header"></li>
-                            <li class="active">
+                            <li class="">
                                 <a href="{{url('/home')}}">
                                     <i class="fa fa-dashboard"></i> 
                                     <span>Dashboard</span>
@@ -101,7 +142,7 @@
                                 </a>
                             </li>
                             @endcan
-                            <li class="">
+                            <li class="active">
                                 <a href="{{url('/department')}}">
                                     <i class="fa fa-dashboard"></i> 
                                     <span>Department</span>
@@ -127,11 +168,53 @@
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="{{url('/home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">Dashboard</li>
+                        <li class="active">Departments</li>
                     </ol>
                 </section>
                 <section class="content">
+                <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                          
+                                <div class="box-header">
+                                    <h3 class="box-title">Departments</h3>
+                                   @can('isAdmin')
+                                    <button onclick="window.open('{{url('/department/add')}}')" type="button" class="btn btn-block btn-primary btn-normal" style="float:right;width:150px"><span class="fa fa-plus"></span> Add Department </button>
+                                   @endcan
+                                </div>
+                                <div class="box-body">
+                                    <table id="example1" class="table table-bordered table-striped ">
+                                        <thead>
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>Department Name</th>
+                                                <th>Management Quota</th>
+                                                <th>Open Catholic</th>
+                                                <th>Roman Catholic</th>
+                                                <th>Dalit Catholic</th>
+                                                <th>Rural / Poor</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                                
+                                            <tfoot>
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>Department Name</th>
+                                                <th>Management Quota</th>
+                                                <th>Open Catholic</th>
+                                                <th>Roman Catholic</th>
+                                                <th>Dalit Catholic</th>
+                                                <th>Rural / Poor</th>
+                                                <th>Action</th>
 
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                </div>
                 </section>
             </div>
             <!-- End of Content -->
@@ -155,5 +238,60 @@
         <script src="{{asset('/bower_components/admin-lte/plugins/jvectormap/jquery-jvectormap-world-mill-en.js')}}" type="text/javascript"></script>
         <script src="{{asset('/bower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}" type="text/javascript"></script>
         <script src="{{asset('/bower_components/chart.js/Chart.js')}}" type="text/javascript"></script>
+        <script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+        <script src="{{asset('/bower_components/select2/dist/js/select2.full.min.js')}}" type="text/javascript"></script>
+
     </body>
+    <script>
+             $(document).ready(function(){
+                        var table = $('#example1').DataTable({
+                            "processing" : true,
+                            "serverSide" : true,
+                            paging: true,
+                            bFilter: true,
+                            ordering: true,
+                            "ajax":{
+                                "url": "{{url("department/data")}}",
+                            },
+                            "columnDefs": [
+                                { "orderable": false, "targets":[7] },
+                            ],
+                            "columns":[
+					            {"data":"id", "name":"id"},
+                                {"data":"department_name", "name":"department_name"},
+					            {"data":"total_seats_management_quota", "name":"total_seats_management_quota"},
+					            {"data":"total_seats_open_catholic", "name":"total_seats_open_catholic"},
+                                {"data":"total_seats_Roman_catholic", "name":"total_seats_Roman_catholic"},
+					            {"data":"total_seats_Dalit_catholic", "name":"total_seats_Dalit_catholic"},
+					            {"data":"total_seats_Rural_poor_students", "name":"total_seats_Rural_poor_students"},
+                                {"data":null,
+                                    "render":function(data,type,row)
+                                    {
+                                        var templateId = data.id;
+                                        return'<a title="View Template" target="_blank" class="" href="{{ url("department/add") }}/'+templateId+'/view" style="color:#1E1E1E"><i class="glyphicon glyphicon-eye-open"></i> </a>';
+                                    }
+                                }
+                            ]
+
+                        });
+                        $('#example1 tfoot th ').each( function () {
+                            var title = $(this).text();
+                            $(this).html( '<input type="text" class="form-control" placeholder="Search '+title+'" />' );
+			            } );
+                        table.columns().every( function () {
+                            var that = this;
+                            $( 'input', this.footer() ).on( 'keyup change', function () {
+                                if ( that.search() !== this.value ) {
+                                    that
+                                        .search( this.value )
+                                        .draw();
+                                }
+                            } );
+                        } );
+
+                });
+
+</script>
+
 <html>

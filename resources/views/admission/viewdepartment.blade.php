@@ -87,10 +87,10 @@
                     </form>
                     <ul class="sidebar-menu" data-widget="tree">
                         <li class="header"></li>
-                            <li class="active">
+                            <li class="">
                                 <a href="{{url('/home')}}">
                                     <i class="fa fa-dashboard"></i> 
-                                    <span>Dashboard</span>
+                                    <span>Users</span>
                                 </a>
                             </li>
                             @can('isAdmin')
@@ -101,7 +101,7 @@
                                 </a>
                             </li>
                             @endcan
-                            <li class="">
+                            <li class="active">
                                 <a href="{{url('/department')}}">
                                     <i class="fa fa-dashboard"></i> 
                                     <span>Department</span>
@@ -127,11 +127,87 @@
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="{{url('/home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">Dashboard</li>
+                        <li class="active">Department</li>
                     </ol>
                 </section>
                 <section class="content">
-
+                    <div class="box box-success">
+                    <div style="margin-top: 10px; margin-right: 10px;margin-bottom: 10px">
+                           
+                                </div>
+                        <div class="box-body">
+                            <table id="temaplate_table" width="100%" cellspacing="10" cellpadding="" class="table table-striped">
+                                <tr class="form-group">
+                                    <td >Id </td>
+                                    <td>:</td>
+                                    <td>
+                                        {{ $department->id }}
+                                    </td>
+                                </tr>
+                                
+                                <tr class="form-group">
+                                    <td >Department Name </td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $department->department_name }}
+                                    </td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td >Total Seats in Management Quota </td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $department->total_seats_management_quota }}
+                                    </td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td >Total Seats in Open Catholic  </td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $department->total_seats_open_catholic }}
+                                    </td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td >Total Seats in Roman Catholic </td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $department->total_seats_Roman_catholic }}
+                                    </td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td >Total Seats in Dalit Catholic </td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $department->total_seats_Dalit_catholic }}
+                                    </td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td >Total Seats in Rural and Poor Catholic </td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $department->total_seats_Rural_poor_students }}
+                                    </td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td >Created By </td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $department->created_at }}
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="box-footer clearfix remove-border-top">
+                                <div>
+                                    <table width="100%">
+                                        <tr>
+                                            <td align="center">
+                                                <a href="{{url('/department')}}"><input type="button" value="Back" title="Back"  class="btn btn-danger"></a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </section>
             </div>
             <!-- End of Content -->

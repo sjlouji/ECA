@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Licet</title>
+        <title>Licet | Add department</title>
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="stylesheet" href="{{asset('/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
         <link rel="stylesheet" href="{{asset('/bower_components/font-awesome/css/font-awesome.min.css')}}">
@@ -12,6 +12,9 @@
         <link rel="stylesheet" href="https:/fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
         <link rel="stylesheet" href="{{asset('/bower_components/admin-lte/dist/css/AdminLTE.min.css')}}">
         <link rel="stylesheet" href="{{asset('/bower_components/admin-lte/dist/css/skins/_all-skins.min.css')}}">
+        <link rel="stylesheet" href="{{asset('/bower_components/select2/dist/css/select2.min.css')}}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+        
     </head>
     <body class="skin-blue fixed sidebar-mini sidebar-mini-expand-feature">
         <div class="wrapper">
@@ -94,14 +97,14 @@
                                 </a>
                             </li>
                             @can('isAdmin')
-                            <li class="active">
+                            <li class="">
                                 <a href="{{url('/user')}}">
                                     <i class="fa fa-users"></i> 
                                     <span>Users</span>
                                 </a>
                             </li>
                             @endcan
-                            <li class="">
+                            <li class="active">
                                 <a href="{{url('/department')}}">
                                     <i class="fa fa-dashboard"></i> 
                                     <span>Department</span>
@@ -127,81 +130,110 @@
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="{{url('/home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">Dashboard</li>
+                        <li class="active">Users</li>
                     </ol>
                 </section>
                 <section class="content">
                     <div class="box box-success">
-                    <div class="box-body">
-                        <form id="temaplate_form" name="temaplate_form" method="post">
-                            <table id="temaplate_table" width="100%" cellspacing="10" cellpadding="10" class="table table-striped">
-                            <tr class="form-group">
-                                        <td >Name <sup class="mandatory">*</sup></td>
-                                        <td>:</td>
-                                        <td>
-                                            <div class="row">
-                                                <div class="col-xs-6 form-input">
-                                                    <input name="name" id="name" type="text" required='required' value="{{$user->name}}" placeholder="Enter Name" class="validate[required] text-input form-control" />
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="form-group">
-                                        <td >Email <sup class="mandatory">*</sup></td>
-                                        <td>:</td>
-                                        <td>
-                                            <div class="row">
-                                                <div class="col-xs-6 form-input">
-                                                    <input name="email" id="email" type="email" required='required' value="{{$user->email}}" placeholder="Enter Email Address" class="validate[required] text-input form-control" />
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                        <div class="box-body">
+                            <form id="temaplate_form" name="temaplate_form" method="post">
+                                <table id="temaplate_table" width="100%" cellspacing="10" cellpadding="10" class="table table-striped">
                                    
                                     <tr class="form-group">
-                                        <td >User Type <sup class="mandatory">*</sup></td>
+                                        <td >Department Name <sup class="mandatory">*</sup></td>
                                         <td>:</td>
                                         <td>
-                                            <div class="row" >
+                                            <div class="row">
                                                 <div class="col-xs-6 form-input">
-                                                <div class="form-group">
-                                                    <select class="form-control select2" id="user_type" name="user_type" style="width: 100%;">
-                                                        <option value="admin">Admin</option>
-                                                        <option selected="selected" value="emp">Employee</option>
-                                                    </select>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            <div class="row" style="margin-top: 10px;">
-                                                <div class="col-xs-6 form-input" id="other_category_div" style="display:none;">
-                                                    <input name="other_category" id="other_category" type="text" placeholder="Enter Template Category" class="text-input form-control" />
+                                                    <input name="department_name" id="department_name" type="text" required='required' placeholder="Enter Department Name" class="validate[required] text-input form-control" />
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
-                                    <div class="box-footer clearfix remove-border-top">
+                                    <tr class="form-group">
+                                        <td >Total Seats <sup class="mandatory">*</sup></td>
+                                        <td>:</td>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-xs-6 form-input">
+                                                    <input name="total_seats" id="total_seats" type="text" required='required' placeholder="Enter Total Number of Seats" class="validate[required] text-input form-control" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="form-group">
+                                        <td >Total Seats in Management Quota <sup class="mandatory">*</sup></td>
+                                        <td>:</td>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-xs-6 form-input">
+                                                    <input name="total_seats_management_quota" id="total_seats_management_quota" type="text" required='required' placeholder="Enter Seats for management quota" class="validate[required] text-input form-control" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="form-group">
+                                        <td >Total Seats in Open Catholic <sup class="mandatory">*</sup></td>
+                                        <td>:</td>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-xs-6 form-input">
+                                                    <input name="total_seats_open_catholic" id="total_seats_open_catholic" type="text" required='required' placeholder="Enter Seats for open catholic" class="validate[required] text-input form-control" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="form-group">
+                                        <td >Total Seats in Roman Catholic <sup class="mandatory">*</sup></td>
+                                        <td>:</td>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-xs-6 form-input">
+                                                    <input name="total_seats_Roman_catholic" id="total_seats_Roman_catholic" type="text" required='required' placeholder="Enter Seats for roman catholic" class="validate[required] text-input form-control" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="form-group">
+                                        <td >Total Seats in Dalit Catholic <sup class="mandatory">*</sup></td>
+                                        <td>:</td>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-xs-6 form-input">
+                                                    <input name="total_seats_Dalit_catholic" id="total_seats_Dalit_catholic" type="text" required='required' placeholder="Enter Seats for Dalit catholic" class="validate[required] text-input form-control" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="form-group">
+                                        <td >Total Seats in Rural / Poor <sup class="mandatory">*</sup></td>
+                                        <td>:</td>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-xs-6 form-input">
+                                                    <input name="total_seats_Rural_poor_students" id="total_seats_Rural_poor_students" type="text" required='required' placeholder="Enter Seats for Rural/Poor" class="validate[required] text-input form-control" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                                </table>
+                                <div class="box-footer clearfix remove-border-top">
                                     <div>
                                         <table width="100%">
                                             <tr>
                                                 <td align="center">
                                                     <input type="submit" value="Save and Continue" class="btn btn-primary" title="Save" id="save">
-                                                    <input type="button" value="Cancel" class="btn btn-secondary" title="Cancel" id="cancel" onclick="window.location='{{url('/user')}}'">
+                                                    <input type="button" value="Cancel" class="btn btn-secondary" title="Cancel" id="cancel" onclick="window.location='{{url('/department')}}'">
                                                 </td>
                                             </tr>
                                         </table>
                                     </div>
                                     <div class="col-md-4 col-md-offset-4" id="error_message" style="margin-top: 25px;"> </div>
                                 </div>
-                                    </table>
-                                    
-                                </div>
-                                <div class="col-md-4 col-md-offset-4" id="error_message" style="margin-top: 25px;"> </div>
-                            </div>
-                        </form>
-                    </div>
-                    </div>
-                    <div>
-
+                            </form>
+                        </div>
                     </div>
                 </section>
             </div>
@@ -226,24 +258,32 @@
         <script src="{{asset('/bower_components/admin-lte/plugins/jvectormap/jquery-jvectormap-world-mill-en.js')}}" type="text/javascript"></script>
         <script src="{{asset('/bower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}" type="text/javascript"></script>
         <script src="{{asset('/bower_components/chart.js/Chart.js')}}" type="text/javascript"></script>
-
+        <script src="{{asset('/bower_components/select2/dist/js/select2.full.min.js')}}" type="text/javascript"></script>
         <script>
         $(document).ready(function(){
                 $('#temaplate_form').submit(function (event) {
                     event.preventDefault();
-                    var name = $('#name').val();
-                    var email = $('#email').val();
-                    var user_type  = $('#user_type').val();
+                    var department_name = $('#department_name').val();
+                    var total_seats = $('#total_seats').val();
+                    var total_seats_management_quota = $('#total_seats_management_quota').val();
+                    var total_seats_open_catholic  = $('#total_seats_open_catholic').val();
                     var alertDiv = $('#error_message');
+                    var total_seats_Roman_catholic = $('#total_seats_Roman_catholic').val();
+                    var total_seats_Dalit_catholic = $('#total_seats_Dalit_catholic').val();
+                    var total_seats_Rural_poor_students = $('#total_seats_Rural_poor_students').val();
 
                     disableButton();
                         $.ajax({
                             type: 'POST',
-                            url: '{{ url("/user/register/storeUpdate") }}',
+                            url: '{{ url("/department/add/store") }}',
                             data: {
-                                name : name,
-                                email          : email,
-                                user_type       : user_type,
+                                department_name : department_name,
+                                total_seats          : total_seats,
+                                total_seats_management_quota          : total_seats_management_quota,
+                                total_seats_open_catholic          : total_seats_open_catholic,
+                                total_seats_Roman_catholic          : total_seats_Roman_catholic,
+                                total_seats_Dalit_catholic          : total_seats_Dalit_catholic,
+                                total_seats_Rural_poor_students          : total_seats_Rural_poor_students,
                                 _token        : '{!! csrf_token() !!}'
                             },
                             dataType: 'json',
@@ -258,7 +298,7 @@
                                 allowEscapeKey: false
                             },
                             function() {
-                                window.location.href="{!! url('/user') !!}";
+                                window.location.href="{!! url('/department') !!}";
                             });
                         })
                 
