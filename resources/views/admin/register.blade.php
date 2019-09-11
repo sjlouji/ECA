@@ -12,9 +12,9 @@
         <link rel="stylesheet" href="https:/fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
         <link rel="stylesheet" href="{{asset('/bower_components/admin-lte/dist/css/AdminLTE.min.css')}}">
         <link rel="stylesheet" href="{{asset('/bower_components/admin-lte/dist/css/skins/_all-skins.min.css')}}">
-        <link rel="stylesheet" href="{{asset('/bower_components/bower_components/select2/dist/css/select2.min.css')}}">
+        <link rel="stylesheet" href="{{asset('/bower_components/select2/dist/css/select2.min.css')}}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
         
-
     </head>
     <body class="skin-blue fixed sidebar-mini sidebar-mini-expand-feature">
         <div class="wrapper">
@@ -124,7 +124,7 @@
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="{{url('/home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">Dashboard</li>
+                        <li class="active">User</li>
                     </ol>
                 </section>
                 <section class="content">
@@ -173,9 +173,9 @@
                                             <div class="row" >
                                                 <div class="col-xs-6 form-input">
                                                 <div class="form-group">
-                                                    <select class="form-control select2" id="user_type" style="width: 100%;">
-                                                        <option selected="selected">Admin</option>
-                                                        <option>Employee</option>
+                                                    <select class="form-control select2" id="user_type" name="user_type" style="width: 100%;">
+                                                        <option selected="selected" value="admin">Admin</option>
+                                                        <option value="emp">Employee</option>
                                                     </select>
                                                 </div>
                                                 </div>
@@ -196,7 +196,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <input type="submit" value="Save and Continue" class="btn btn-primary" title="Save" id="save">
-                                                    <input type="button" value="Cancel" class="btn btn-secondary" title="Cancel" id="cancel">
+                                                    <input type="button" value="Cancel" class="btn btn-secondary" title="Cancel" id="cancel" onclick="window.location='{{url('/user')}}'">
                                                 </td>
                                             </tr>
                                         </table>
@@ -232,57 +232,64 @@
         <script src="{{asset('/bower_components/select2/dist/js/select2.full.min.js')}}" type="text/javascript"></script>
         <script>
         $(document).ready(function(){
+                $('#temaplate_form').submit(function (event) {
+                    event.preventDefault();
+                    var name = $('#name').val();
+                    var email = $('#email').val();
+                    var password = $('#password').val();
+                    var user_type  = $('#user_type').val();
+                    var alertDiv = $('#error_message');
 
-            $('#temaplate_form').submit(function (event) {
-                event.preventDefault();
-                var name = $('#name');
-                var email = $('#email');
-                var password = $('#password');
-                var user_type  = $("input[name='user_type']:checked").val();
-                if (thisForm.validationEngine('validate')) {
                     disableButton();
-                    $.ajax({
-                        type: 'POST',
-                        url: '{{ url("/user/register/data") }}',
-                        data: {
-                            name : name,
-                            email          : email,
-                            password          : password,
-                            user_type       : user_type,
-                            _token        : '{!! csrf_token() !!}'
-                        },
-                        dataType: 'json',
-                        encode: true
-                    })
-                    .done(function (response) {
-                        enableButton();
-                        swal({
-                            title: "Success",
-                            text: response.message,
-                            type: "success",
-                            allowEscapeKey: false
-                        },
-                        function() {
-                            window.location.href="{!! url('/admin/sms-templates') !!}";
-                        });
-                    })
-                    .fail(function (jqXHR, textStatus, errorThrown) {
-                        enableButton();
-                        var errors = jqXHR.responseJSON.errors;
-                        if(errors){
-                            var parentDiv = '<div class="alert alert-warning  col-md-12"><ul>';
-                            $.each(errors, function($key, $message) {
-                                if($message != null){
-                                    parentDiv += '<li>' + $message + '</li>';
-                                }
+                        $.ajax({
+                            type: 'POST',
+                            url: '{{ url("/user/register/store") }}',
+                            data: {
+                                name : name,
+                                email          : email,
+                                password          : password,
+                                user_type       : user_type,
+                                _token        : '{!! csrf_token() !!}'
+                            },
+                            dataType: 'json',
+                            encode: true
+                        })
+                        .done(function (response) {
+                            enableButton();
+                            swal({
+                                title: "Success",
+                                text: response.message,
+                                type: "success",
+                                allowEscapeKey: false
+                            },
+                            function() {
+                                window.location.href="{!! url('/user') !!}";
                             });
-                            parentDiv += '</ul></div>';
-                            alertDiv.html(parentDiv);
-                            return false;
-                        }
+                        })
+                
+                        .fail(function (jqXHR, textStatus, errorThrown) {
+                            enableButton();
+                            var errors = errorThrown;
+                            console.log(errorThrown);
+                                var parentDiv = '<div class="alert alert-error alert-dismissible  col-md-12"><ul>  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
+                                        parentDiv += '<li>' + errorThrown + '. User name Exits it seems'+'</li>';
+                                parentDiv += '</ul></div>';
+                                alertDiv.html(parentDiv);
+                        });
+                });
+                function disableButton() {
+                    $("#save").val("Processing...");
+                    $('#cancel').bind('click', function(e){
+                        e.preventDefault();
                     });
                 }
-            });
-    </script>
+                function enableButton() {
+                    $("#save").val("Save and Continue");
+                    $('#cancel').unbind('click');
+                }
+        });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
     </body>
 <html>
