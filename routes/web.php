@@ -38,6 +38,7 @@ Route::post('/user/register/store','RegisterNewUserController@store')->middlewar
 Route::get('/user/data', [ 'as' => 'user.data', 'uses' => 'RegisterNewUserController@data'])->middleware('can:isAdmin');
 Route::get('/user/register/{id}/view','RegisterNewUserController@view')->middleware('can:isAdmin');
 Route::get('/user/register/{id}/edit','RegisterNewUserController@edit')->middleware('can:isAdmin');
+Route::get('/user/register/{id}/delete','RegisterNewUserController@delete')->middleware('can:isAdmin');
 Route::post('/user/register/storeUpdate','RegisterNewUserController@storeUpdate')->middleware('can:isAdmin');
 // User Routes Ends
 
@@ -49,6 +50,9 @@ Route::get('/department/add', [ 'as' => 'department.add', 'uses' => 'DepartmentC
 Route::post('/department/add/store', [ 'as' => 'department.store', 'uses' => 'DepartmentController@store']);
 Route::get('/department/data',[ 'as' => 'department.data', 'uses' => 'DepartmentController@data']);
 Route::get('/department/add/{id}/view','DepartmentController@view');
+Route::get('/department/add/{id}/edit','DepartmentController@edit');
+Route::get('/department/add/{id}/delete','DepartmentController@delete')->middleware('can:isAdmin');
+Route::post('/user/add/storeUpdate','DepartmentController@storeUpdate')->middleware('can:isAdmin');
 // Department Routes Ends here
 
 // Admission process routes starts

@@ -138,44 +138,70 @@
                         <form id="temaplate_form" name="temaplate_form" method="post">
                             <table id="temaplate_table" width="100%" cellspacing="10" cellpadding="10" class="table table-striped">
                                     <tr class="form-group">
-                                        <td >Name <sup class="mandatory">*</sup></td>
+                                        <td >Department Name <sup class="mandatory">*</sup></td>
                                         <td>:</td>
                                         <td>
                                             <div class="row">
                                                 <div class="col-xs-6 form-input">
-                                                    <input name="name" id="name" type="text" required='required' value="{{$user->name}}" placeholder="Enter Name" class="validate[required] text-input form-control" />
+                                                    <input name="department_name" id="department_name" type="text" required='required' value="{{$user->department_name}}" placeholder="Enter Name" class="validate[required] text-input form-control" />
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
+
                                     <tr class="form-group">
-                                        <td >Email <sup class="mandatory">*</sup></td>
-                                        <td>:</td>
-                                        <td>
-                                            <div class="row">
-                                                <div class="col-xs-6 form-input">
-                                                    <input name="email" id="email" type="email" required='required' value="{{$user->email}}" placeholder="Enter Email Address" class="validate[required] text-input form-control" />
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="form-group">
-                                        <td >User Type <sup class="mandatory">*</sup></td>
+                                        <td >Total Seats in Management Quota <sup class="mandatory">*</sup></td>
                                         <td>:</td>
                                         <td>
                                             <div class="row" >
                                                 <div class="col-xs-6 form-input">
                                                 <div class="form-group">
-                                                    <select class="form-control select2" id="user_type" name="user_type" style="width: 100%;">
-                                                        <option value="admin">Admin</option>
-                                                        <option selected="selected" value="emp">Employee</option>
-                                                    </select>
+                                                <input name="total_seats_management_quota" id="total_seats_management_quota" type="text" required='required' value="{{$user->total_seats_management_quota}}" placeholder="Enter Name" class="validate[required] text-input form-control" />
                                                 </div>
                                                 </div>
                                             </div>
-                                            <div class="row" style="margin-top: 10px;">
-                                                <div class="col-xs-6 form-input" id="other_category_div" style="display:none;">
-                                                    <input name="other_category" id="other_category" type="text" placeholder="Enter Template Category" class="text-input form-control" />
+                                        </td>
+                                    </tr>
+                                    <tr class="form-group">
+                                        <td >Total Seats in Open Catholic <sup class="mandatory">*</sup></td>
+                                        <td>:</td>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-xs-6 form-input">
+                                                <input name="total_seats_Roman_catholic" id="total_seats_Roman_catholic" type="text" required='required' value="{{$user->total_seats_Roman_catholic}}" placeholder="Enter Name" class="validate[required] text-input form-control" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="form-group">
+                                        <td >Total Seats in Open Catholic <sup class="mandatory">*</sup></td>
+                                        <td>:</td>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-xs-6 form-input">
+                                                    <input name="total_seats_Dalit_catholic" id="total_seats_Dalit_catholic" type="text" required='required' value="{{$user->total_seats_Dalit_catholic}}" placeholder="Enter Name" class="validate[required] text-input form-control" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="form-group">
+                                        <td >Total Seats in Dalit Catholic <sup class="mandatory">*</sup></td>
+                                        <td>:</td>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-xs-6 form-input">
+                                                    <input name="total_seats_Rural_poor_students" id="total_seats_Rural_poor_students" type="text" required='required' value="{{$user->total_seats_Rural_poor_students}}" placeholder="Enter Name" class="validate[required] text-input form-control" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="form-group">
+                                        <td >Total Seats in Open Catholic <sup class="mandatory">*</sup></td>
+                                        <td>:</td>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-xs-6 form-input">
+                                                    <input name="total_seats_open_catholic" id="total_seats_open_catholic" type="text" required='required' value="{{$user->total_seats_open_catholic}}" placeholder="Enter Name" class="validate[required] text-input form-control" />
                                                 </div>
                                             </div>
                                         </td>
@@ -225,19 +251,27 @@
         $(document).ready(function(){
                 $('#temaplate_form').submit(function (event) {
                     event.preventDefault();
-                    var name = $('#name').val();
-                    var email = $('#email').val();
-                    var user_type  = $('#user_type').val();
+                    var department_name = $('#department_name').val();
+                    var total_seats = $('#total_seats').val();
+                    var total_seats_management_quota = $('#total_seats_management_quota').val();
+                    var total_seats_open_catholic  = $('#total_seats_open_catholic').val();
                     var alertDiv = $('#error_message');
+                    var total_seats_Roman_catholic = $('#total_seats_Roman_catholic').val();
+                    var total_seats_Dalit_catholic = $('#total_seats_Dalit_catholic').val();
+                    var total_seats_Rural_poor_students = $('#total_seats_Rural_poor_students').val();
                     var id = {{ $user->id }};
                     disableButton();
                         $.ajax({
                             type: 'POST',
-                            url: '{{ url("/user/register/storeUpdate") }}',
+                            url: '{{ url("/user/add/storeUpdate") }}',
                             data: {
-                                name : name,
-                                email          : email,
-                                user_type       : user_type,
+                                department_name : department_name,
+                                total_seats          : total_seats,
+                                total_seats_management_quota          : total_seats_management_quota,
+                                total_seats_open_catholic          : total_seats_open_catholic,
+                                total_seats_Roman_catholic          : total_seats_Roman_catholic,
+                                total_seats_Dalit_catholic          : total_seats_Dalit_catholic,
+                                total_seats_Rural_poor_students          : total_seats_Rural_poor_students,
                                 id              : id,
                                 _token        : '{!! csrf_token() !!}'
                             },
@@ -253,7 +287,7 @@
                                 allowEscapeKey: false
                             },
                             function() {
-                                window.location.href="{!! url('/user') !!}";
+                                window.location.href="{!! url('/department') !!}";
                             });
                         })
                         .fail(function (jqXHR, textStatus, errorThrown) {

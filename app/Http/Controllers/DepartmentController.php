@@ -42,4 +42,33 @@ class DepartmentController extends Controller
         }
         return view('admission.viewdepartment')->with('department',$department);
     }
+
+    public function edit(Request $request){
+        $userId = $request->route('id');
+        $user = Department::find($userId);
+        if(!$user){
+            return "Page Not Found" ;
+        }
+        return view('admission.editDepartment')->with('user',$user);
+    }
+    public function delete(Request $request){
+        // Log::info($request->id);
+        $user = Department::find($request->id);
+        $user->delete();
+        return view('admission.department');
+    }
+    public function storeUpdate(Request $request){
+        Log::info($request);
+        $user = Department::find($request->id);
+        $user->department_name=$request->department_name;
+        $user->total_seats_management_quota=$request->total_seats_management_quota;
+        $user->total_seats_open_catholic=$request->total_seats_open_catholic;
+        $user->total_seats_Roman_catholic=$request->total_seats_Roman_catholic;
+        $user->total_seats_Dalit_catholic=$request->total_seats_Dalit_catholic;
+        $user->total_seats_open_catholic=$request->total_seats_open_catholic;
+        $user->total_seats_Rural_poor_students=$request->total_seats_Rural_poor_students;
+        
+        $user->update();
+        return response()->json(['status' => 'SUCCESS', 'message' => "User Updated Successfully"], 201);
+    }
 }

@@ -249,6 +249,7 @@
                             },
                             "columnDefs": [
                                 { "orderable": false, "targets":[5] },
+
                             ],
                             "columns":[
 					            {"data":"id", "name":"id"},
@@ -260,7 +261,7 @@
                                     "render":function(data,type,row)
                                     {
                                         var templateId = data.id;
-                                        return'<a title="View Template" target="_blank" class="" href="{{ url("user/register") }}/'+templateId+'/view" style="color:#1E1E1E"><i class="glyphicon glyphicon-eye-open"></i> </a>';
+                                        return'<a title="View Template" target="_blank" class="" href="{{ url("user/register") }}/'+templateId+'/view" style="color:#1E1E1E">@can('isAdmin')<i class="glyphicon glyphicon-eye-open"></i> </a><a title="Edit Template" target="_blank" class="actionicon" href="{{ url("user/register") }}/'+templateId+'/edit" style="color:#1E1E1E"><i class="glyphicon glyphicon-edit"></i> </a></a><a title="Edit Template" class="actionicon" href="{{ url("user/register") }}/'+templateId+'/delete" style="color:#1E1E1E"><i class="glyphicon glyphicon-trash"></i> </a></a>'@endcan;
                                     }
                                 }
                             ]
