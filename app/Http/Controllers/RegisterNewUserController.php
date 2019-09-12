@@ -28,25 +28,22 @@ class RegisterNewUserController extends Controller
     }
 
     public function storeUpdate(Request $request){
-        $userId = $request->route('id');
-        $user = User::find($userId);
+        $user = User::find($request->id);
         $user->name=$request->name;
         $user->email=$request->email;
         $user->user_type=$request->user_type;
-        $user->password = "admin";
-        Log::info($user);
-
         $user->update();
         return response()->json(['status' => 'SUCCESS', 'message' => "User Updated Successfully"], 201);
     }
     public function data(Request $request){
-        Log::info("working");
+        // Log::info("working");
            $userDetails = DB::table('users')->select('id','name','email','user_type','created_at','updated_at')->get();
-           Log::info($userDetails);
+        //    Log::info($userDetails);
            return Datatables::of($userDetails)->make(true);
     }
     public function view(Request $request){
         $userId = $request->route('id');
+        Log::info($userId);
         $user = User::find($userId);
         if(!$user){
             return "Page Not Found" ;
@@ -56,9 +53,16 @@ class RegisterNewUserController extends Controller
     public function edit(Request $request){
         $userId = $request->route('id');
         $user = User::find($userId);
+        // Log::info($user);
         if(!$user){
             return "Page Not Found" ;
         }
         return view('admin.edit')->with('user',$user);
+    }
+    public function delete(Request $request)
+    {
+        $user = User::find($request->id);
+        $user->delete();
+        return view('admin.users');
     }
 }

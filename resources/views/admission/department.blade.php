@@ -269,7 +269,8 @@
                                     "render":function(data,type,row)
                                     {
                                         var templateId = data.id;
-                                        return'<a title="View Template" target="_blank" class="" href="{{ url("department/add") }}/'+templateId+'/view" style="color:#1E1E1E"><i class="glyphicon glyphicon-eye-open"></i> </a>';
+                                        return'<a title="View Template" target="_blank" class="" href="{{ url("department/add") }}/'+templateId+'/view" style="color:#1E1E1E"><i class="glyphicon glyphicon-eye-open"></i> </a>@can('isAdmin')<a title="Edit Template" target="_blank" class="actionicon" href="{{ url("department/add") }}/'+templateId+'/edit" style="color:#1E1E1E"><i class="glyphicon glyphicon-edit"></i> </a></a><a title="Edit Template" class="actionicon" href="{{ url("department/add") }}/'+templateId+'/delete" style="color:#1E1E1E"><i class="glyphicon glyphicon-trash"></i> </a></a>@endcan';
+
                                     }
                                 }
                             ]

@@ -53,7 +53,13 @@
                             </label>
                         </div>
                     </div>
-         
+                    @if (session('status'))
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            {{ session('status') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+
+                        </div>
+                    @endif
                     <div class="col-xs-4">
                         <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
                     </div>
