@@ -58,7 +58,8 @@ Route::post('/user/add/storeUpdate','DepartmentController@storeUpdate')->middlew
 
 // Admission process routes starts
 Route::get('/admission',function(){
-    return view('admission.admissionProcess');
+    return view('selection.selections');
 });
+
 // Admission process routes ends
 
