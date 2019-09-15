@@ -40,6 +40,7 @@ Route::get('/user/register/{id}/view','RegisterNewUserController@view')->middlew
 Route::get('/user/register/{id}/edit','RegisterNewUserController@edit')->middleware('can:isAdmin');
 Route::get('/user/register/{id}/delete','RegisterNewUserController@delete')->middleware('can:isAdmin');
 Route::post('/user/register/storeUpdate','RegisterNewUserController@storeUpdate')->middleware('can:isAdmin');
+Route::get('/user/register/exports','RegisterNewUserController@exports')->middleware('can:isAdmin');
 // User Routes Ends
 
 // Department Routes Starts here
@@ -57,7 +58,8 @@ Route::post('/user/add/storeUpdate','DepartmentController@storeUpdate')->middlew
 
 // Admission process routes starts
 Route::get('/admission',function(){
-    return view('admission.admissionProcess');
+    return view('selection.selections');
 });
+
 // Admission process routes ends
 
