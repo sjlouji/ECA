@@ -179,6 +179,7 @@
                                 <div class="box-header">
                                     <h3 class="box-title">Users</h3>
                                     <button onclick="window.open('{{url('/register')}}')" type="button" class="btn btn-block btn-primary btn-normal" style="float:right;width:100px"><span class="fa fa-plus"></span> Add a user</button>
+                                    <button onclick="window.open('{{url('/user/register/exports')}}')" type="button" class="btn btn-block btn-primary btn-normal" style="float:right;width:120px;margin-top:0px;margin-right: 10px"><span class="fa  fa-level-down"></span> Export Users</button>
                                 </div>
                                 <div class="box-body">
                                     <table id="example1" class="table table-bordered table-striped ">

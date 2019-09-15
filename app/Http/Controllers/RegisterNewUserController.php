@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use Log;
 use Illuminate\Http\Request;
 use App\User;
+use App\Exports;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
-
+use Maatwebsite\Excel\Facades\Excel;
 
 class RegisterNewUserController extends Controller
 {
@@ -64,5 +65,8 @@ class RegisterNewUserController extends Controller
         $user = User::find($request->id);
         $user->delete();
         return view('admin.users');
+    }
+    public function exports(){
+        return Excel::download(new Exports\CsvExport, 'sample.csv');
     }
 }

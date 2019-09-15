@@ -40,6 +40,7 @@ Route::get('/user/register/{id}/view','RegisterNewUserController@view')->middlew
 Route::get('/user/register/{id}/edit','RegisterNewUserController@edit')->middleware('can:isAdmin');
 Route::get('/user/register/{id}/delete','RegisterNewUserController@delete')->middleware('can:isAdmin');
 Route::post('/user/register/storeUpdate','RegisterNewUserController@storeUpdate')->middleware('can:isAdmin');
+Route::get('/user/register/exports','RegisterNewUserController@exports')->middleware('can:isAdmin');
 // User Routes Ends
 
 // Department Routes Starts here
