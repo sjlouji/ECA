@@ -15,9 +15,26 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
+        <link rel="stylesheet" href="{{asset('/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+
+
         <style>
             .btn{
                 margin-left:10px;
+            }
+            tfoot{
+			    display: table-header-group;
+			    width:100px;
+			}
+		tfoot input {
+	        width: 100%;
+	        padding: 3px;
+	        box-sizing: border-box;
+   	 	}
+            #example1_filter 
+            {
+                display:none;
             }
         </style>
     </head>
@@ -145,48 +162,45 @@
                         </div>
                         <div class="box-body">
                             @can('isAdmin')
-                            <div>
-                                <select name="yearofselection" id="yearofselection" class="selectpicker" title="Select year" requried  onchange="onTemplateCategoriesChange();" data-actions-box="true" data-live-search="true" >
+                            <div style="margin-bottom:30px">
+                            <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <input type="file" name="file" accept=".csv" style="float:right;width:170px;">
+                                    <br>
+                                    <button class="btn btn-success" style="float:right;margin-right:25px;margin-top:10px">Import User Data</button>
+                            </form>
+                                @yield('csv_data')
+                                <select name="yearofselection" id="yearofselection" class="selectpicker" title="Select year"  data-actions-box="true" data-live-search="true" >
                                     <option value="OTHERS">Others</option>          
                                 </select>
-                                <div class="row" style="margin-top: 10px;">
-                                    <div class="col-xs-6 form-input" id="other_category_div" style="display:none;">
-                                        <div class="input-group">
-                                            <div class="input-group-addon">
-                                                <i class="fa fa-calendar"></i>
-                                            </div>
-                                            <input class="date-own form-control" style="width: 180px;" type="text" placeholder="yyyy">
-                                            <button onclick="window.open('{{url('/department/add')}}')" type="button" class="btn btn-block btn-primary btn-normal" style="width:150px;float:left"><span class="fa fa-plus"></span> Add Selection List </button>
-                                        </div>
-                                    </div>
-                                </div>
+                               
                             </div>
                             @endCan
-                            <table id="example1" class="table table-bordered table-striped" style="margin-top:50px">
+                            <table id="example1" class="table table-bordered table-striped" style="margin-top:10px">
                                             <thead>
                                                 <tr>
-                                                    <th>Id</th>
-                                                    <th>Department Name</th>
-                                                    <th>Management Quota</th>
-                                                    <th>Open Catholic</th>
+                                                    <th>Application Number</th>
+                                                    <th>Year</th>
+                                                    <th>Student Name</th>
+                                                    <th>Cut off</th>
                                                     <th>Roman Catholic</th>
-                                                    <th>Dalit Catholic</th>
-                                                    <th>Rural / Poor</th>
+                                                    <th>Religion</th>
+                                                    <th>Board</th>
+                                                    <th>Caste</th>
                                                     <th>Action</th>
                                                 </tr>
-                                                </thead>
-                                                    
-                                                <tfoot>
+                                            </thead>
+                                            <tfoot>
                                                 <tr>
-                                                    <th>Id</th>
-                                                    <th>Department Name</th>
-                                                    <th>Management Quota</th>
-                                                    <th>Open Catholic</th>
+                                                    <th>Application Number</th>
+                                                    <th>Year</th>
+                                                    <th>Student Name</th>
+                                                    <th>Cut off</th>
                                                     <th>Roman Catholic</th>
-                                                    <th>Dalit Catholic</th>
-                                                    <th>Rural / Poor</th>
+                                                    <th>Religion</th>
+                                                    <th>Board</th>
+                                                    <th>Caste</th>
                                                     <th>Action</th>
-
                                                 </tr>
                                             </tfoot>
                                         </table>
@@ -216,29 +230,71 @@
         <script src="{{asset('/bower_components/admin-lte/plugins/jvectormap/jquery-jvectormap-world-mill-en.js')}}" type="text/javascript"></script>
         <script src="{{asset('/bower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}" type="text/javascript"></script>
         <script src="{{asset('/bower_components/chart.js/Chart.js')}}" type="text/javascript"></script>
+        
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
-
+        <script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
          <script typetype="text/javascript">
            $('.date-own').datepicker({
                 minViewMode: 2,
                 format: 'yyyy'
             });
             $(".selectpicker").selectpicker();
-            $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
-            function onTemplateCategoriesChange(){
-                var category = $('#yearofselection').val();
-                if(category == 'OTHERS'){
-                    $("#other_category_div").show();
-                    $("#other_category").addClass("validate[required]");
-                }else{
-                    $("#other_category_div").hide();
-                    $("#other_category").removeClass("validate[required]");
-                }
-            }
+            $(document).ready(function(){
+                        var table = $('#example1').DataTable({
+                            "processing" : true,
+                            "serverSide" : true,
+
+                            "ajax":{
+                                "url": "{{url("admission/data")}}",
+                            },
+                            "columnDefs": [
+                                { "orderable": false, "targets":[8] },
+                            ],
+                            "columns":[
+                                {"data":"application_no", "name":"application_no"},
+					            {"data":"year_of_addmission", "name":"year_of_addmission"},
+					            {"data":"student_name", "name":"student_name"},
+                                {"data":"cut_off", "name":"cut_off"},
+					            {"data":"catholic_or_non_catholic", "name":"catholic_or_non_catholic"},
+					            {"data":"religion", "name":"religion"},
+					            {"data":"board", "name":"board"},
+					            {"data":"caste", "name":"caste"},
+                                {"data":null,
+                                    "render":function(data,type,row)
+                                    {
+                                        var templateId = data.id;
+                                        return'<a title="View Template" target="_blank" class="" href="{{ url("department/add") }}/'+templateId+'/view" style="color:#1E1E1E"><i class="glyphicon glyphicon-eye-open"></i> </a>@can('isAdmin')<a title="Edit Template" target="_blank" class="actionicon" href="{{ url("department/add") }}/'+templateId+'/edit" style="color:#1E1E1E"><i class="glyphicon glyphicon-edit"></i> </a></a><a title="Edit Template" class="actionicon" href="{{ url("department/add") }}/'+templateId+'/delete" style="color:#1E1E1E"><i class="glyphicon glyphicon-trash"></i> </a></a>@endcan';
+
+                                    }
+                                }
+                            ]
+
+                        });
+                        $('#example1 tfoot th ').each( function () {
+                            var title = $(this).text();
+                            $(this).html( '<input type="text" class="form-control" placeholder="Search '+title+'" />' );
+			            } );
+                        table.columns().every( function () {
+                            var that = this;
+                            $( 'input', this.footer() ).on( 'keyup change', function () {
+                                if ( that.search() !== this.value ) {
+                                    that
+                                        .search( this.value )
+                                        .draw();
+                                }
+                            } );
+                        } );
+
+
+                });
+
         </script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
     </body>
 <html>

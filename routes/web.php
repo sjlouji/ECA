@@ -11,9 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
 
 Auth::routes();
 
@@ -57,9 +54,9 @@ Route::post('/user/add/storeUpdate','DepartmentController@storeUpdate')->middlew
 // Department Routes Ends here
 
 // Admission process routes starts
-Route::get('/admission',function(){
-    return view('selection.selections');
-});
+Route::get('/admission', 'Selection@index')->middleware('can:isAdmin');
+Route::post('/admission/import', 'Selection@import')->name('import');
+Route::get('/admission/data',[ 'as' => 'admission.data', 'uses' => 'Selection@data']);
 
 // Admission process routes ends
 
