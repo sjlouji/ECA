@@ -29,7 +29,6 @@ class DepartmentController extends Controller
     }
     public function data(Request $request){
         $departmentDetails = DB::table('departments')->select('id','department_name','total_seats','total_seats_management_quota','total_seats_open_catholic','total_seats_Roman_catholic','total_seats_Dalit_catholic','total_seats_Rural_poor_students')->get();
-        Log::info($departmentDetails);
         return Datatables::of($departmentDetails)->escapeColumns([])
                                                  ->make(true);
     }

@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Licet</title>
+        <title>Licet | Department</title>
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="stylesheet" href="{{asset('/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
         <link rel="stylesheet" href="{{asset('/bower_components/font-awesome/css/font-awesome.min.css')}}">
@@ -96,14 +96,14 @@
                                 </a>
                             </li>
                             @can('isAdmin')
-                            <li class="active">
+                            <li class="">
                                 <a href="{{url('/user')}}">
                                     <i class="fa fa-users"></i> 
                                     <span>Users</span>
                                 </a>
                             </li>
                             @endcan
-                            <li class="">
+                            <li class="active">
                                 <a href="{{url('/department')}}">
                                     <i class="fa fa-dashboard"></i> 
                                     <span>Department</span>
@@ -129,7 +129,9 @@
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="{{url('/home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">Users</li>
+                        <li class="active">Department</li>
+                        <li class="active">Edit Department</li>
+
                     </ol>
                 </section>
                 <section class="content">
@@ -211,7 +213,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <input type="submit" value="Save and Continue" class="btn btn-primary" title="Save" id="save">
-                                                    <input type="button" value="Cancel" class="btn btn-secondary" title="Cancel" id="cancel" onclick="window.location='{{url('/user')}}'">
+                                                    <input type="button" value="Cancel" class="btn btn-secondary" title="Cancel" id="cancel" onclick="window.location='{{url('/department')}}'">
                                                 </td>
                                             </tr>
                                         </table>
