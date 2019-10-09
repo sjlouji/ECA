@@ -54,9 +54,13 @@ Route::post('/user/add/storeUpdate','DepartmentController@storeUpdate')->middlew
 // Department Routes Ends here
 
 // Admission process routes starts
-Route::get('/admission', 'Selection@index')->middleware('can:isAdmin');
+Route::get('/admission', 'Selection@index');
 Route::post('/admission/import', 'Selection@import')->name('import');
 Route::get('/admission/data',[ 'as' => 'admission.data', 'uses' => 'Selection@data']);
+Route::get('/admission/selection/{id}/view', 'Selection@view')->middleware('can:isAdmin');
+Route::get('/admission/selection/{id}/edit', 'Selection@edit')->middleware('can:isAdmin');
+Route::get('/admission/selection/{id}/delete', 'Selection@delete')->middleware('can:isAdmin');
+Route::post('/admission/selection/update','Selection@update')->middleware('can:isAdmin');
 
 // Admission process routes ends
 

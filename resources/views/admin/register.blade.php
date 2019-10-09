@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Licet</title>
+        <title>Licet | User</title>
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="stylesheet" href="{{asset('/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
         <link rel="stylesheet" href="{{asset('/bower_components/font-awesome/css/font-awesome.min.css')}}">
@@ -131,6 +131,7 @@
                     <ol class="breadcrumb">
                         <li><a href="{{url('/home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
                         <li class="active">Users</li>
+                        <li class="active">Add user</li>
                     </ol>
                 </section>
                 <section class="content">

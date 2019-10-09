@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Licet</title>
+        <title>Licet | Admission</title>
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="stylesheet" href="{{asset('/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
         <link rel="stylesheet" href="{{asset('/bower_components/font-awesome/css/font-awesome.min.css')}}">
@@ -268,7 +268,7 @@
                                     "render":function(data,type,row)
                                     {
                                         var templateId = data.id;
-                                        return'<a title="View Template" target="_blank" class="" href="{{ url("department/add") }}/'+templateId+'/view" style="color:#1E1E1E"><i class="glyphicon glyphicon-eye-open"></i> </a>@can('isAdmin')<a title="Edit Template" target="_blank" class="actionicon" href="{{ url("department/add") }}/'+templateId+'/edit" style="color:#1E1E1E"><i class="glyphicon glyphicon-edit"></i> </a></a><a title="Edit Template" class="actionicon" href="{{ url("department/add") }}/'+templateId+'/delete" style="color:#1E1E1E"><i class="glyphicon glyphicon-trash"></i> </a></a>@endcan';
+                                        return'<a title="View Template" target="_blank" class="" href="{{ url("admission/selection") }}/'+templateId+'/view" style="color:#1E1E1E"><i class="glyphicon glyphicon-eye-open"></i> </a>@can('isAdmin')<a title="Edit Template" target="_blank" class="actionicon" href="{{ url("admission/selection") }}/'+templateId+'/edit" style="color:#1E1E1E"><i class="glyphicon glyphicon-edit"></i> </a></a><a title="Edit Template" class="actionicon" href="{{ url("admission/selection") }}/'+templateId+'/delete" style="color:#1E1E1E"><i class="glyphicon glyphicon-trash"></i> </a></a>@endcan';
 
                                     }
                                 }

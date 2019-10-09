@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Licet | User</title>
+        <title>Licet | Admission</title>
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="stylesheet" href="{{asset('/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
         <link rel="stylesheet" href="{{asset('/bower_components/font-awesome/css/font-awesome.min.css')}}">
@@ -94,7 +94,7 @@
                                 </a>
                             </li>
                             @can('isAdmin')
-                            <li class="active">
+                            <li class="">
                                 <a href="{{url('/user')}}">
                                     <i class="fa fa-users"></i> 
                                     <span>Users</span>
@@ -107,7 +107,7 @@
                                     <span>Department</span>
                                 </a>
                             </li>
-                            <li class="">
+                            <li class="active">
                                 <a href="{{url('/admission')}}">
                                     <i class="fa fa-dashboard"></i> 
                                     <span>Admission</span>
@@ -127,7 +127,7 @@
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="{{url('/home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">User</li>
+                        <li class="active">Admission</li>
                         <li class="active">View User</li>
                     </ol>
                 </section>
@@ -142,36 +142,183 @@
                                     <td >Id </td>
                                     <td>:</td>
                                     <td>
-                                        {{ $user->id }}
+                                        {{ $department->id }}
                                     </td>
                                 </tr>
                                 
                                 <tr class="form-group">
-                                    <td >Name </td>
+                                    <td >Register Number </td>
                                     <td>:</td>
                                     <td>
-                                    {{ $user->name }}
+                                    {{ $department->application_no }}
                                     </td>
                                 </tr>
                                 <tr class="form-group">
-                                    <td >Email </td>
+                                    <td >Name</td>
                                     <td>:</td>
                                     <td>
-                                    {{ $user->email }}
+                                    {{ $department->student_name }}
                                     </td>
                                 </tr>
                                 <tr class="form-group">
-                                    <td >User type </td>
+                                    <td >Year of Addmission</td>
                                     <td>:</td>
                                     <td>
-                                    {{ $user->user_type }}
+                                    {{ $department->year_of_addmission }}
                                     </td>
                                 </tr>
                                 <tr class="form-group">
-                                    <td >Created At </td>
+                                    <td >Catholic or Non - Catholic </td>
                                     <td>:</td>
                                     <td>
-                                    {{ $user->created_at }}
+                                    {{ $department->catholic_or_non_catholic }}
+                                    </td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td >Dalith or Non - Dalith </td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $department->calit_or_non_dalit }}
+                                    </td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td >Maths </td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $department->maths }}
+                                    </td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td >Physics </td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $department->physics }}
+                                    </td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td >Chemistry </td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $department->chemistry }}
+                                    </td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td >Cut - Off </td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $department->cut_off }}
+                                    </td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td >Choice 1 </td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $department->choice_1 }}
+                                    </td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td >Choice 2 </td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $department->choice_2 }}
+                                    </td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td >Religion </td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $department->religion }}
+                                    </td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td >Community </td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $department->community }}
+                                    </td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td >Caste </td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $department->caste }}
+                                    </td>
+                                </tr> <tr class="form-group">
+                                    <td >Board </td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $department->board }}
+                                    </td>
+                                </tr>
+
+                                <tr class="form-group">
+                                    <td >Year of Passing </td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $department->year_of_passing }}
+                                    </td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td >Father's Name </td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $department->father_name }}
+                                    </td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td >Father's designation </td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $department->father_designation }}
+                                    </td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td >Mother's Name </td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $department->mother_name }}
+                                    </td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td >Mother's Designation </td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $department->mother_designation }}
+                                    </td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td >Montly Income</td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $department->monthly_income }}
+                                    </td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td >Father's Mobile Number</td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $department->father_mobile_no }}
+                                    </td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td >Mother's Mobile Number</td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $department->mother_mobile_no }}
+                                    </td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td >Created At</td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $department->created_at }}
+                                    </td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td >Updated At</td>
+                                    <td>:</td>
+                                    <td>
+                                    {{ $department->updated_at }}
                                     </td>
                                 </tr>
                             </table>
@@ -180,7 +327,7 @@
                                     <table width="100%">
                                         <tr>
                                             <td align="center">
-                                                <a href="{{url('/user')}}"><input type="button" value="Back" title="Back"  class="btn btn-danger"></a>
+                                                <a href="{{url('/admission')}}"><input type="button" value="Back" title="Back"  class="btn btn-danger"></a>
                                             </td>
                                         </tr>
                                     </table>
