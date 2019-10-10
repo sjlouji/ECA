@@ -2,5 +2,4 @@
 *.css linguist-vendored
 *.scss linguist-vendored
 *.js linguist-vendored
-*.js linguist-language=Java
 CHANGELOG.md export-ignore
