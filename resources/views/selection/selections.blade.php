@@ -171,9 +171,9 @@
                                     <button type="button" class="btn btn-success" style="float:right;margin-right:25px;margin-top:10px" data-toggle="modal" data-target="#myModal">Import Admission file</button>
                             </form>
                                 @yield('csv_data')
-                                <select name="yearofselection" id="yearofselection" class="selectpicker" title="Select year"  multiple data-actions-box="true" data-live-search="true" >
+                                <select name="yearofselection" id="yearofselection" class="selectpicker" title="Select year" data-actions-box="true" data-live-search="true" >
                                     @foreach ($year as $years)
-                                        <option value="{{$years->year}}" selected>{{$years->year}}</option>
+                                        <option value="{{$years->year}}" >{{$years->year}}</option>
                                     @endforeach         
                                 </select>
                                
@@ -281,7 +281,6 @@
                         var table = $('#example1').DataTable({
                             "processing" : true,
                             "serverSide" : true,
-
                             "ajax":{
                                 "url": "{{url("admission/data")}}",
                                 type: 'GET',
@@ -290,6 +289,14 @@
                                 }
                             },
                             "columnDefs": [
+                                { "orderable": false, "targets":[0] },
+                                { "orderable": false, "targets":[1] },
+                                { "orderable": false, "targets":[2] },
+                                { "orderable": false, "targets":[3] },
+                                { "orderable": false, "targets":[4] },
+                                { "orderable": false, "targets":[5] },
+                                { "orderable": false, "targets":[6] },
+                                { "orderable": false, "targets":[7] },
                                 { "orderable": false, "targets":[8] },
                             ],
                             "columns":[
