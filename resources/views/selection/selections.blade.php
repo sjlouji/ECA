@@ -165,13 +165,16 @@
                             <div style="margin-bottom:30px">
                             <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
-                                <input type="file" name="file" accept=".csv" style="float:right;width:170px;">
+                                <!-- <input type="file" name="file" accept=".csv" style="float:right;width:170px;"> -->
                                     <br>
-                                    <button class="btn btn-success" style="float:right;margin-right:25px;margin-top:10px">Import User Data</button>
+                                    <!-- <button class="btn btn-success" style="float:right;margin-right:25px;margin-top:10px">Import User Data</button> -->
+                                    <button type="button" class="btn btn-success" style="float:right;margin-right:25px;margin-top:10px" data-toggle="modal" data-target="#myModal">Import Admission file</button>
                             </form>
                                 @yield('csv_data')
-                                <select name="yearofselection" id="yearofselection" class="selectpicker" title="Select year"  data-actions-box="true" data-live-search="true" >
-                                    <option value="OTHERS">Others</option>          
+                                <select name="yearofselection" id="yearofselection" class="selectpicker" title="Select year" data-actions-box="true" data-live-search="true" >
+                                    @foreach ($year as $years)
+                                        <option value="{{$years->year}}" >{{$years->year}}</option>
+                                    @endforeach         
                                 </select>
                                
                             </div>
@@ -218,7 +221,37 @@
                 reserved. 
             </footer>
             <!-- End of Footer -->
+            <!-- start Modal dialog box for importing the admission list -->
+            <!-- Modal -->
+            <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
 
+                <!-- Modal content-->
+                <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Import File</h4>
+                </div>
+                <div class="modal-body">
+                                                
+                            <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                                <div class="col-xs-6 form-input">
+                                                    <input name="year_of_joining" id="year_of_joining" type="text" required='required'  placeholder="Year of Joining" class="validate[required] text-input form-control" />
+                                                </div><br>
+                                    <input type="file" name="file" accept=".csv" style="float:right">
+                                    <br>
+                                    <button class="btn btn-success" style="margin-top:10px;margin-right: 3px">Import User Data</button>
+                            </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+                </div>
+
+            </div>
+            </div>
+            <!-- End of Modal dialog box for importing the admission list -->
         </div>
 
         <script src="{{asset('/bower_components/jquery/dist/jquery.min.js')}}" type="text/javascript"></script>
@@ -248,11 +281,22 @@
                         var table = $('#example1').DataTable({
                             "processing" : true,
                             "serverSide" : true,
-
                             "ajax":{
                                 "url": "{{url("admission/data")}}",
+                                type: 'GET',
+                                data: function ( d ){
+                                    d.yearofadmission = $('#yearofselection').val();
+                                }
                             },
                             "columnDefs": [
+                                { "orderable": false, "targets":[0] },
+                                { "orderable": false, "targets":[1] },
+                                { "orderable": false, "targets":[2] },
+                                { "orderable": false, "targets":[3] },
+                                { "orderable": false, "targets":[4] },
+                                { "orderable": false, "targets":[5] },
+                                { "orderable": false, "targets":[6] },
+                                { "orderable": false, "targets":[7] },
                                 { "orderable": false, "targets":[8] },
                             ],
                             "columns":[
@@ -278,7 +322,12 @@
                         $('#example1 tfoot th ').each( function () {
                             var title = $(this).text();
                             $(this).html( '<input type="text" class="form-control" placeholder="Search '+title+'" />' );
-			            } );
+			            });
+                        $('#yearofselection').on('change', function(){
+                            var myTable = $('#example1').DataTable();  
+                            myTable.ajax.reload();
+                            myTable.ajax.reload( null, false );
+                        });
                         table.columns().every( function () {
                             var that = this;
                             $( 'input', this.footer() ).on( 'keyup change', function () {
@@ -289,12 +338,10 @@
                                 }
                             } );
                         } );
-
-
                 });
-
+                
         </script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 
     </body>
 <html>
