@@ -80,4 +80,8 @@ class Selection extends Controller
         $user->update();
         return response()->json(['status' => 'SUCCESS', 'message' => "User Updated Successfully"], 201);
     }
+    public function selectionList1(Request $request){
+        
+    }
+
 }

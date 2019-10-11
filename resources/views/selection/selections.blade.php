@@ -170,6 +170,7 @@
                                     <!-- <button class="btn btn-success" style="float:right;margin-right:25px;margin-top:10px">Import User Data</button> -->
                                     <button type="button" class="btn btn-success" style="float:right;margin-right:25px;margin-top:10px" data-toggle="modal" data-target="#myModal">Import Admission file</button>
                             </form>
+                                <button type="button" class="btn btn-success" style="float:right;margin-right:25px;margin-top:10px" onclick="window.open('{{url('/admission/selection/selectionList1')}}')">Generate Selection List</button>
                                 @yield('csv_data')
                                 <select name="yearofselection" id="yearofselection" class="selectpicker" title="Select year" data-actions-box="true" data-live-search="true" >
                                     @foreach ($year as $years)
@@ -312,7 +313,7 @@
                                     "render":function(data,type,row)
                                     {
                                         var templateId = data.id;
-                                        return'<a title="View Template" target="_blank" class="" href="{{ url("admission/selection") }}/'+templateId+'/view" style="color:#1E1E1E"><i class="glyphicon glyphicon-eye-open"></i> </a>@can('isAdmin')<a title="Edit Template" target="_blank" class="actionicon" href="{{ url("admission/selection") }}/'+templateId+'/edit" style="color:#1E1E1E"><i class="glyphicon glyphicon-edit"></i> </a></a><a title="Edit Template" class="actionicon" href="{{ url("admission/selection") }}/'+templateId+'/delete" style="color:#1E1E1E"><i class="glyphicon glyphicon-trash"></i> </a></a>@endcan';
+                                        return'<a title="View Template" target="_blank" class="" href="{{ url("admission/selection") }}/'+templateId+'/view" style="color:#1E1E1E"><i class="glyphicon glyphicon-eye-open"></i> </a>@can('isAdmin')<a title="Edit Template" target="_blank" class="actionicon" href="{{ url("admission/selection") }}/'+templateId+'/edit" style="color:#1E1E1E"><i class="glyphicon glyphicon-edit"></i> </a></a></a>@endcan';
 
                                     }
                                 }
