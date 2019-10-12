@@ -113,6 +113,12 @@
                                     <span>Admission</span>
                                 </a>
                             </li>
+                            <li class="">
+                                <a href="{{url('/selectionList')}}">
+                                    <i class="fa fa-dashboard"></i> 
+                                    <span>Selection List</span>
+                                </a>
+                            </li>
                         </li>
                     </ul>
                 </section>

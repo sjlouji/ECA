@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>Licet | Admission</title>
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="stylesheet" href="{{asset('/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
@@ -138,6 +139,12 @@
                                     <span>Admission</span>
                                 </a>
                             </li>
+                            <li class="">
+                                <a href="{{url('/selectionList')}}">
+                                    <i class="fa fa-dashboard"></i> 
+                                    <span>Selection List</span>
+                                </a>
+                            </li>
                         </li>
                     </ul>
                 </section>
@@ -170,11 +177,11 @@
                                     <!-- <button class="btn btn-success" style="float:right;margin-right:25px;margin-top:10px">Import User Data</button> -->
                                     <button type="button" class="btn btn-success" style="float:right;margin-right:25px;margin-top:10px" data-toggle="modal" data-target="#myModal">Import Admission file</button>
                             </form>
-                                <button type="button" class="btn btn-success" style="float:right;margin-right:25px;margin-top:10px" onclick="window.open('{{url('/admission/selection/selectionList1')}}')">Generate Selection List</button>
+                                <button type="button" class="btn btn-success selectionList" id="buttonSelectionList1" style="float:right;margin-right:25px;margin-top:10px">Generate Selection List</button>
                                 @yield('csv_data')
                                 <select name="yearofselection" id="yearofselection" class="selectpicker" title="Select year" data-actions-box="true" data-live-search="true" >
                                     @foreach ($year as $years)
-                                        <option value="{{$years->year}}" >{{$years->year}}</option>
+                                        <option value="{{$years->year}}" selected>{{$years->year}}</option>
                                     @endforeach         
                                 </select>
                                
@@ -340,9 +347,59 @@
                             } );
                         } );
                 });
+
+                $(document).ready(function(){
+                    $('.selectionList').click(function(){
+                       var yearofselection =  $('#yearofselection').val();
+                        $.ajax({
+                            type : 'POST',
+                            url : '{{url("/admission/selection/selectionList1")}}',
+                             data : {
+                                yearofselection : yearofselection,
+                                _token        : '{!! csrf_token() !!}'
+
+                             },
+                             dataType: 'json',
+                             encode: true
+                        })
+                        .done(function(response){
+                            swal({
+                                title : 'success',
+                                type : 'success',
+                                text : response.message,
+                                allowEscapeKey : false
+                            }),
+                            function(){
+                                window.location.href  = "{!!url('/admission')!!}";
+                            }
+                        })
+                        .fail(function (jqXHR, textStatus, errorThrown) {
+                            enableButton();
+                            console.log(jqXHR);
+                            swal({
+                                title : 'error',
+                                type : 'error',
+                                text : errorThrown,
+                                allowEscapeKey : false
+                            }),
+                            function(){
+                                window.location.href  = "{!!url('/admission')!!}";
+                            }
+                        });
+                    });
+                        function disableButton() {
+                            $("#save").val("Processing...");
+                            $('#cancel').bind('click', function(e){
+                                e.preventDefault();
+                            });
+                        }
+                        function enableButton() {
+                            $("#save").val("Save and Continue");
+                            $('#cancel').unbind('click');
+                        }
+                    });
                 
         </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-
     </body>
 <html>

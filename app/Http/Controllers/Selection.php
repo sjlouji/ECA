@@ -27,7 +27,6 @@ class Selection extends Controller
         return back();
     }
     public function data(Request $request){
-        Log::info($request);
         $yearofadmission = $request->yearofadmission;
 
         $departmentDetails = DB::table('selection_lists')->Where('selection_lists.year_of_addmission',$yearofadmission)->select('id','year_of_addmission','application_no','student_name','catholic_or_non_catholic','calit_or_non_dalit','maths','physics','chemistry','cut_off','choice_1','choice_2','religion','community','caste','board','year_of_passing','father_name','father_designation','mother_name','mother_designation','monthly_income','father_mobile_no','mother_mobile_no')->orderBy('cut_off', 'desc')->get();
@@ -81,7 +80,15 @@ class Selection extends Controller
         return response()->json(['status' => 'SUCCESS', 'message' => "User Updated Successfully"], 201);
     }
     public function selectionList1(Request $request){
-        
+        Log::info($request);
+        if($request->yearofselection==NULL){
+            return response()->json(['value' => 'Null Value Provided'], 404);
+        }
+        $yearofadmission = $request->yearofselection;
+        $departmentDetails = DB::table('selection_lists')->Where('selection_lists.year_of_addmission',$yearofadmission)->select('id','year_of_addmission','application_no','student_name','catholic_or_non_catholic','calit_or_non_dalit','maths','physics','chemistry','cut_off','choice_1','choice_2','religion','community','caste','board','year_of_passing','father_name','father_designation','mother_name','mother_designation','monthly_income','father_mobile_no','mother_mobile_no')->orderBy('cut_off', 'desc')->get();
+        foreach($departmentDetails as $department){
+            Log::info($department->cut_off);
+        }
     }
 
 }
