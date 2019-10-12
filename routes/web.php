@@ -61,6 +61,10 @@ Route::get('/admission/selection/{id}/view', 'Selection@view')->middleware('can:
 Route::get('/admission/selection/{id}/edit', 'Selection@edit')->middleware('can:isAdmin');
 Route::get('/admission/selection/{id}/delete', 'Selection@delete')->middleware('can:isAdmin');
 Route::post('/admission/selection/update','Selection@update')->middleware('can:isAdmin');
-
+Route::post('/admission/selection/selectionList1','Selection@selectionList1')->middleware('can:isAdmin');
 // Admission process routes ends
 
+//Selection List Route Starts
+Route::get('/selectionList', 'SelectionListController@index');
+
+//Selection List Route Ends
