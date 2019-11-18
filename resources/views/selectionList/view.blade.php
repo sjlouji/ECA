@@ -144,6 +144,12 @@
                                     <span>Selection List</span>
                                 </a>
                             </li>
+                            <li class="">
+                                    <a href="{{url('/sms')}}">
+                                        <i class="fa fa-dashboard"></i> 
+                                        <span>Sms</span>
+                                    </a>
+                            </li>
                         </li>
                     </ul>
                 </section>
@@ -163,16 +169,24 @@
                 </section>
                 <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
-              <li class="active"><a href="#tab_1" data-toggle="tab">Selection List 1</a></li>
-              <li><a href="#tab_2" data-toggle="tab">Selection List 2</a></li>
+              <li class="active"><a href="#tab_1" data-toggle="tab">Open Quota</a></li>
+              <li><a href="#tab_2" data-toggle="tab">Roman Catholic</a></li>
+              <li><a href="#tab_3" data-toggle="tab">Dalith Catholic</a></li>
+              <li><a href="#tab_4" data-toggle="tab">Rural and Poor </a></li>
             </ul>
             <div class="tab-content" >
-              <div class="tab-pane active" id="tab_1" >
+                <div class="tab-pane active" id="tab_1" >
                     @include('selectionList.tab_1');
-              </div>
-              <div class="tab-pane" id="tab_2">
-
-              </div>
+                </div>
+                <div class="tab-pane" id="tab_2">
+                    @include('selectionList.tab_2');
+                </div>
+                <div class="tab-pane" id="tab_3">
+                    @include('selectionList.tab_3');
+                </div>
+                <div class="tab-pane" id="tab_4">
+                    @include('selectionList.tab_4');
+                </div>
             </div>
           </div>
         </div>
@@ -207,5 +221,224 @@
         <script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+        <script>
+             $(document).ready(function(){
+               var table = $('#example1').DataTable({
+                   "processing" : true,
+                   "serverSide" : true,
+                   "bAutoWidth": false,
+                   "bFilter": false,
+                   "ajax":{
+                       "url": "{{url("selectionList/selectionlist1OQ/data")}}",
+                       type: 'GET',
+                        data: function ( d ){
+                            d.department_name = $('#department_select').val();
+                        }
+                   },
+                   "columnDefs": [
+                                { "orderable": false, "targets":[0] },
+                                { "orderable": false, "targets":[1] },
+                                { "orderable": false, "targets":[2] },
+                                { "orderable": false, "targets":[3] },
+                                { "orderable": false, "targets":[4] },
+                                { "orderable": false, "targets":[5] },
+                        
+                            ],
+                   "columns":[
+                       {"data":"student_id", "name":"id"},
+                       {"data":"student_name", "name":"application_id"},
+                       {"data":"department", "name":"department"},
+                       {"data":"mode_choice", "name":"mode_choice"},
+                       {"data":"cut_off", "name":"cut_off"},
+                       {"data":"cut_off", "name":"cut_off"},
+                   ]
+
+               });
+               $('#example1 tfoot th ').each( function () {
+                            var title = $(this).text();
+                            $(this).html( '<input type="text" class="form-control" placeholder="Search '+title+'" />' );
+                });
+               table.columns().every( function () {
+                   var that = this;
+                   $( 'input', this.footer() ).on( 'keyup change', function () {
+                       if ( that.search() !== this.value ) {
+                           that
+                               .search( this.value )
+                               .draw();
+                       }
+                   } );
+               } );
+               
+                $('#department_select').on('change', function(){
+                    var myTable = $('#example1').DataTable();  
+                    myTable.ajax.reload();
+                    myTable.ajax.reload( null, false );
+                });
+            });
+            // For the next Tab 2
+            $(document).ready(function(){
+               var table = $('#example2').DataTable({
+                   "processing" : true,
+                   "serverSide" : true,
+                   "bAutoWidth": false,
+                   "bFilter": false,
+                   "ajax":{
+                       "url": "{{url("selectionList/selectionlist1RC/data")}}",
+                       type: 'GET',
+                        data: function ( d ){
+                            d.department_name = $('#department_select1').val();
+                        }
+                   },
+                   "columnDefs": [
+                                { "orderable": false, "targets":[0] },
+                                { "orderable": false, "targets":[1] },
+                                { "orderable": false, "targets":[2] },
+                                { "orderable": false, "targets":[3] },
+                                { "orderable": false, "targets":[4] },
+                                { "orderable": false, "targets":[5] },
+                        
+                            ],
+                   "columns":[
+                       {"data":"student_id", "name":"id"},
+                       {"data":"student_name", "name":"application_id"},
+                       {"data":"department", "name":"department"},
+                       {"data":"mode_choice", "name":"mode_choice"},
+                       {"data":"cut_off", "name":"cut_off"},
+                       {"data":"cut_off", "name":"cut_off"},
+                   ]
+
+               });
+               $('#example2 tfoot th ').each( function () {
+                            var title = $(this).text();
+                            $(this).html( '<input type="text" class="form-control" placeholder="Search '+title+'" />' );
+                });
+               table.columns().every( function () {
+                   var that = this;
+                   $( 'input', this.footer() ).on( 'keyup change', function () {
+                       if ( that.search() !== this.value ) {
+                           that
+                               .search( this.value )
+                               .draw();
+                       }
+                   } );
+               } );
+           
+                $('#department_select1').on('change', function(){
+                    var myTable = $('#example2').DataTable();  
+                    myTable.ajax.reload();
+                    myTable.ajax.reload( null, false );
+                });
+            });
+            //for the tab 3
+            $(document).ready(function(){
+               var table = $('#example3').DataTable({
+                   "processing" : true,
+                   "serverSide" : true,
+                   "bAutoWidth": false,
+                   "bFilter": false,
+                   "ajax":{
+                       "url": "{{url("selectionList/selectionlist1DC/data")}}",
+                       type: 'GET',
+                        data: function ( d ){
+                            d.department_name = $('#department_selec2').val();
+                        }
+                   },
+                   "columnDefs": [
+                                { "orderable": false, "targets":[0] },
+                                { "orderable": false, "targets":[1] },
+                                { "orderable": false, "targets":[2] },
+                                { "orderable": false, "targets":[3] },
+                                { "orderable": false, "targets":[4] },
+                                { "orderable": false, "targets":[5] },
+                        
+                            ],
+                   "columns":[
+                       {"data":"student_id", "name":"id"},
+                       {"data":"student_name", "name":"application_id"},
+                       {"data":"department", "name":"department"},
+                       {"data":"mode_choice", "name":"mode_choice"},
+                       {"data":"cut_off", "name":"cut_off"},
+                       {"data":"cut_off", "name":"cut_off"},
+                   ]
+
+               });
+               $('#example3 tfoot th ').each( function () {
+                            var title = $(this).text();
+                            $(this).html( '<input type="text" class="form-control" placeholder="Search '+title+'" />' );
+                });
+               table.columns().every( function () {
+                   var that = this;
+                   $( 'input', this.footer() ).on( 'keyup change', function () {
+                       if ( that.search() !== this.value ) {
+                           that
+                               .search( this.value )
+                               .draw();
+                       }
+                   } );
+               } );
+           
+                $('#department_selec2').on('change', function(){
+                    var myTable = $('#example3').DataTable();  
+                    myTable.ajax.reload();
+                    myTable.ajax.reload( null, false );
+                });
+            });
+            //For tab 4
+            $(document).ready(function(){
+               var table = $('#example4').DataTable({
+                   "processing" : true,
+                   "serverSide" : true,
+                   "bAutoWidth": false,
+                   "bFilter": false,
+                   "ajax":{
+                       "url": "{{url("selectionList/selectionlist1RP/data")}}",
+                       type: 'GET',
+                        data: function ( d ){
+                            d.department_name = $('#department_selec3').val();
+                        }
+                   },
+                   "columnDefs": [
+                                { "orderable": false, "targets":[0] },
+                                { "orderable": false, "targets":[1] },
+                                { "orderable": false, "targets":[2] },
+                                { "orderable": false, "targets":[3] },
+                                { "orderable": false, "targets":[4] },
+                                { "orderable": false, "targets":[5] },
+                        
+                            ],
+                   "columns":[
+                       {"data":"student_id", "name":"id"},
+                       {"data":"student_name", "name":"application_id"},
+                       {"data":"department", "name":"department"},
+                       {"data":"mode_choice", "name":"mode_choice"},
+                       {"data":"cut_off", "name":"cut_off"},
+                       {"data":"cut_off", "name":"cut_off"},
+                   ]
+
+               });
+               $('#example4 tfoot th ').each( function () {
+                            var title = $(this).text();
+                            $(this).html( '<input type="text" class="form-control" placeholder="Search '+title+'" />' );
+                });
+               table.columns().every( function () {
+                   var that = this;
+                   $( 'input', this.footer() ).on( 'keyup change', function () {
+                       if ( that.search() !== this.value ) {
+                           that
+                               .search( this.value )
+                               .draw();
+                       }
+                   } );
+               } );
+              
+                $('#department_selec3').on('change', function(){
+                    var myTable = $('#example4').DataTable();  
+                    myTable.ajax.reload();
+                    myTable.ajax.reload( null, false );
+                });
+            });
+        </script>
+
     </body>
 <html>

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateItemsTable extends Migration
+class AddColoumnPoorInSelectionListV3 extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('items', function (Blueprint $table) {
-           $table->increments('id');
-           $table->string('title');
-           $table->text('description');
-           $table->timestamps();
-       });
+        Schema::table('selection_lists', function (Blueprint $table) {
+            $table->renameColumn('poor_or_not_poor','poor_or_not_poor')->default('none');
+        });
     }
-
 
     /**
      * Reverse the migrations.
@@ -29,5 +25,8 @@ class CreateItemsTable extends Migration
      */
     public function down()
     {
+        Schema::table('selection_list_v3', function (Blueprint $table) {
+            //
+        });
     }
 }

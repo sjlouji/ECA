@@ -67,6 +67,6 @@ class RegisterNewUserController extends Controller
         return view('admin.users');
     }
     public function exports(){
-        return Excel::download(new Exports\CsvExport, 'sample.csv');
+        return Excel::download(new Exports\CsvExport, 'users.csv');
     }
 }

@@ -160,6 +160,12 @@
                                     <span>Selection List</span>
                                 </a>
                             </li>
+                            <li class="">
+                                    <a href="{{url('/sms')}}">
+                                        <i class="fa fa-dashboard"></i> 
+                                        <span>Sms</span>
+                                    </a>
+                            </li>
                         </li>
                     </ul>
                 </section>
@@ -174,7 +180,7 @@
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="{{url('/home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">Departments</li>
+                    <li class="active">Departments</li>
                     </ol>
                 </section>
                 <section class="content">

@@ -13,9 +13,9 @@ class SelectionListV3 extends Migration
      */
     public function up()
     {
-        Schema::table('selection_lists', function ($table) { 
-            $table->string('year_of_addmission')->after('id')->nullable();
-        });
+        // Schema::table('selection_lists', function ($table) { 
+        //     $table->string('year_of_addmission')->after('id')->nullable();
+        // });
     }
 
     /**

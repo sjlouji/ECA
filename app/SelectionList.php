@@ -19,6 +19,7 @@ class SelectionList extends Model
             'choice_1',
             'choice_2',
             'religion',
+            'poor_or_not_poor',
             'community',
             'caste',
             'board',

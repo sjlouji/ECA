@@ -122,6 +122,12 @@
                                     <span>Selection List</span>
                                 </a>
                             </li>
+                            <li class="">
+                                    <a href="{{url('/sms')}}">
+                                        <i class="fa fa-dashboard"></i> 
+                                        <span>Sms</span>
+                                    </a>
+                            </li>
                         </li>
                     </ul>
                 </section>

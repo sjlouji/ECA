@@ -13,9 +13,9 @@ class UpdateTableCsedepartmentV1 extends Migration
      */
     public function up()
     {
-        Schema::table('table_csedepartment', function ($table) { 
-            $table->string('year_of_addmission')->after('student_name');
-        });
+        // Schema::table('table_csedepartment', function ($table) { 
+        //     $table->string('year_of_addmission')->after('student_name');
+        // });
     }
 
     /**

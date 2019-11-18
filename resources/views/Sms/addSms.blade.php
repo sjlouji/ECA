@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>Licet | Admission</title>
+        <title>Licet | SmS</title>
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="stylesheet" href="{{asset('/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
         <link rel="stylesheet" href="{{asset('/bower_components/font-awesome/css/font-awesome.min.css')}}">
@@ -133,7 +133,7 @@
                                     <span>Department</span>
                                 </a>
                             </li>
-                            <li class="active">
+                            <li class="">
                                 <a href="{{url('/admission')}}">
                                     <i class="fa fa-dashboard"></i> 
                                     <span>Admission</span>
@@ -145,11 +145,11 @@
                                     <span>Selection List</span>
                                 </a>
                             </li>
-                            <li class="">
-                                    <a href="{{url('/sms')}}">
-                                        <i class="fa fa-dashboard"></i> 
-                                        <span>Sms</span>
-                                    </a>
+                            <li class="active">
+                                <a href="{{url('/sms')}}">
+                                    <i class="fa fa-dashboard"></i> 
+                                    <span>Sms</span>
+                                </a>
                             </li>
                         </li>
                     </ul>
@@ -165,65 +165,112 @@
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="{{url('/home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">Admission</li>
+                        <li class="active">Sms Control</li>
                     </ol>
                 </section>
                 <section class="content">
-                    <div class="box box-default">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Selection Process</h3>
-                        </div>
-                        <div class="box-body">
-                            @can('isAdmin')
-                            <div style="margin-bottom:30px">
-                            <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <!-- <input type="file" name="file" accept=".csv" style="float:right;width:170px;"> -->
-                                    <br>
-                                    <!-- <button class="btn btn-success" style="float:right;margin-right:25px;margin-top:10px">Import User Data</button> -->
-                                    <button type="button" class="btn btn-success" style="float:right;margin-right:25px;margin-top:10px" data-toggle="modal" data-target="#myModal">Import Admission file</button>
-                            </form>
-                                <button type="button" class="btn btn-success selectionList" id="buttonSelectionList1" style="float:right;margin-right:25px;margin-top:10px">Generate Selection List</button>
-                                @yield('csv_data')
-                                <select name="yearofselection" id="yearofselection" class="selectpicker" title="Select year" data-actions-box="true" data-live-search="true" >
-                                    @foreach ($year as $years)
-                                        <option value="{{$years->year}}" selected>{{$years->year}}</option>
-                                    @endforeach         
-                                </select>
-                               
+                        <div class="box box-success">
+                            <div class="box-body">
+                                <form id="temaplate_form" name="temaplate_form" method="post">
+                                    <table id="temaplate_table" width="100%" cellspacing="10" cellpadding="10" class="table table-striped">
+                                       
+                                        <tr class="form-group">
+                                            <td >Department Name <sup class="mandatory">*</sup></td>
+                                            <td>:</td>
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col-xs-6 form-input">
+                                                        <input name="department_name" id="department_name" type="text" required='required' placeholder="Enter Department Name" class="validate[required] text-input form-control" />
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="form-group">
+                                            <td >Total Seats <sup class="mandatory">*</sup></td>
+                                            <td>:</td>
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col-xs-6 form-input">
+                                                        <input name="total_seats" id="total_seats" type="text" required='required' placeholder="Enter Total Number of Seats" class="validate[required] text-input form-control" />
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="form-group">
+                                            <td >Total Seats in Management Quota <sup class="mandatory">*</sup></td>
+                                            <td>:</td>
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col-xs-6 form-input">
+                                                        <input name="total_seats_management_quota" id="total_seats_management_quota" type="text" required='required' placeholder="Enter Seats for management quota" class="validate[required] text-input form-control" />
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="form-group">
+                                            <td >Total Seats in Open Catholic <sup class="mandatory">*</sup></td>
+                                            <td>:</td>
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col-xs-6 form-input">
+                                                        <input name="total_seats_open_catholic" id="total_seats_open_catholic" type="text" required='required' placeholder="Enter Seats for open catholic" class="validate[required] text-input form-control" />
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="form-group">
+                                            <td >Total Seats in Roman Catholic <sup class="mandatory">*</sup></td>
+                                            <td>:</td>
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col-xs-6 form-input">
+                                                        <input name="total_seats_Roman_catholic" id="total_seats_Roman_catholic" type="text" required='required' placeholder="Enter Seats for roman catholic" class="validate[required] text-input form-control" />
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="form-group">
+                                            <td >Total Seats in Dalit Catholic <sup class="mandatory">*</sup></td>
+                                            <td>:</td>
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col-xs-6 form-input">
+                                                        <input name="total_seats_Dalit_catholic" id="total_seats_Dalit_catholic" type="text" required='required' placeholder="Enter Seats for Dalit catholic" class="validate[required] text-input form-control" />
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="form-group">
+                                            <td >Total Seats in Rural / Poor <sup class="mandatory">*</sup></td>
+                                            <td>:</td>
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col-xs-6 form-input">
+                                                        <input name="total_seats_Rural_poor_students" id="total_seats_Rural_poor_students" type="text" required='required' placeholder="Enter Seats for Rural/Poor" class="validate[required] text-input form-control" />
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                                    </table>
+                                    <div class="box-footer clearfix remove-border-top">
+                                        <div>
+                                            <table width="100%">
+                                                <tr>
+                                                    <td align="center">
+                                                        <input type="submit" value="Save and Continue" class="btn btn-primary" title="Save" id="save">
+                                                        <input type="button" value="Cancel" class="btn btn-secondary" title="Cancel" id="cancel" onclick="window.location='{{url('/department')}}'">
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="col-md-4 col-md-offset-4" id="error_message" style="margin-top: 25px;"> </div>
+                                    </div>
+                                </form>
                             </div>
-                            @endCan
-                            <table id="example1" class="table table-bordered table-striped" style="margin-top:10px">
-                                            <thead>
-                                                <tr>
-                                                    <th>Application Number</th>
-                                                    <th>Year</th>
-                                                    <th>Student Name</th>
-                                                    <th>Cut off</th>
-                                                    <th>Roman Catholic</th>
-                                                    <th>Religion</th>
-                                                    <th>Choice 1</th>
-                                                    <th>Choice 2</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>Application Number</th>
-                                                    <th>Year</th>
-                                                    <th>Student Name</th>
-                                                    <th>Cut off</th>
-                                                    <th>Roman Catholic</th>
-                                                    <th>Religion</th>
-                                                    <th>Choice 1</th>
-                                                    <th>Choice 2</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
                         </div>
-                    </div>
-                </section>
+                    </section>
             </div>
             <!-- End of Content -->
             <!-- Start of footer -->
@@ -285,12 +332,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
         <script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
-         <script typetype="text/javascript">
-           $('.date-own').datepicker({
-                minViewMode: 2,
-                format: 'yyyy'
-            });
-            $(".selectpicker").selectpicker();
+         {{-- <script typetype="text/javascript">
             $(document).ready(function(){
                         var table = $('#example1').DataTable({
                             "processing" : true,
@@ -405,7 +447,7 @@
                         }
                     });
                 
-        </script>
+        </script> --}}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
     </body>
 <html>

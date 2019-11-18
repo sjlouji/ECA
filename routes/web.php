@@ -66,5 +66,14 @@ Route::post('/admission/selection/selectionList1','Selection@selectionList1')->m
 
 //Selection List Route Starts
 Route::get('/selectionList', 'SelectionListController@index');
-
+Route::get('/selectionList/selectionlist1OQ/data',[ 'as' => 'selectionList.selectionlist1OQ.data', 'uses' => 'SelectionListController@selectionList1OQData']);
+Route::get('/selectionList/selectionlist1RC/data',[ 'as' => 'selectionList.selectionlist1RC.data', 'uses' => 'SelectionListController@selectionList1RCData']);
+Route::get('/selectionList/selectionlist1DC/data',[ 'as' => 'selectionList.selectionlist1DC.data', 'uses' => 'SelectionListController@selectionList1DCData']);
+Route::get('/selectionList/selectionlist1RP/data',[ 'as' => 'selectionList.selectionlist1RP.data', 'uses' => 'SelectionListController@selectionList1RPData']);
 //Selection List Route Ends
+
+//Sms Template
+Route::get('/sms', 'SmsController@index');
+Route::get('/sms/add',[ 'as' => 'sms.add', 'uses' => 'SmsController@addTemplate']);
+
+//Sms Template
