@@ -10,6 +10,11 @@
                                             <option value="{{$dep->department_name}}" selected>{{$dep->department_name}}</option>
                                         @endforeach         
                                     </select>
+                                    <select name="year_of_selection1" id="year_of_selection1" class="selectpicker" title="Year" data-actions-box="true" data-live-search="true" >
+                                        @foreach ($year as $years)
+                                            <option value="{{$years->year}}" selected>{{$years->year}}</option>
+                                        @endforeach         
+                                    </select>
                                     <div class="box-body">
                                         <table id="example2" class="table table-bordered table-striped ">
                                             <thead>

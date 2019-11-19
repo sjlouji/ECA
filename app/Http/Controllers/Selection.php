@@ -111,286 +111,218 @@ class Selection extends Controller
             foreach($dept_name as $dep){
                 //Checking if the department name in the Selection list and the database matches
                 if($sele->choice_1 == $dep['department_name']){
-                    //Checking if the seats for open quota has closed
                     if(${$dep['department_name'].'total_seats_opencatholic'} <=0){
                         if($sele->catholic_or_non_catholic == 'NC'){
                             if($sele->poor_or_not_poor == 'P'){
                                 if(${$dep['department_name'].'total_seats_Rural_poor_students'} <=0){
-                                    foreach($dept_name as $dep){
-                                        //Checking if the department name in the Selection list and the database matches
-                                        if($sele->choice_2 == $dep['department_name']){
-                                            //Checking if the seats for open quota has closed
-                                            if(${$dep['department_name'].'total_seats_opencatholic'} <=0){
-                                                    //Checking if the student is Non Catholic
-                                                    if($sele->catholic_or_non_catholic == 'NC'){
-                                                        //Checking if the student is from a Poor and a Rural Background
-                                                        if($sele->poor_or_not_poor == 'P'){
+                                    //Selection list 2
+                                    //Selection list 2
+                                            foreach($dept_name as $dep){
+                                                //Checking if the department name in the Selection list and the database matches
+                                                if($sele->choice_2 == $dep['department_name']){
+                                                    if(${$dep['department_name'].'total_seats_opencatholic'} <=0){
+                                                        if($sele->catholic_or_non_catholic == 'NC'){
+                                                            if($sele->poor_or_not_poor == 'P'){
                                                                 if(${$dep['department_name'].'total_seats_Rural_poor_students'} <=0){
-                                                                    if($sele->choice_2 == $dep['department_name']){
-                                                                        if(${$dep['department_name'].'total_seats_Rural_poor_students'} <=0){
-                                                                            Log::info('You are not selected');
-                                                                        }
-                                                                        else{
-                                                                            $ruralandpoorData->student_id = $sele->id;
-                                                                            $ruralandpoorData->student_name = $sele->student_name;
-                                                                            $ruralandpoorData->register_no = $sele->application_no;
-                                                                            $ruralandpoorData->department = $dep['department_name'];
-                                                                            $ruralandpoorData->cut_off = $sele->cut_off;
-                                                                            $ruralandpoorData->mode_choice = 'Choice 2';
-                                                                            $ruralandpoorData->save();
-                                                                            Log::info($sele->student_name.'selected for the department'.$dep['department_name'].  'Based on Proverty or Rurality => Choice 2');
-                                                                            ${$dep['department_name'].'total_seats_Rural_poor_students'}--;
-                                                                            Log::info(${$dep['department_name'].'total_seats_Rural_poor_students'});
-                                                                        }
-                                                                    }
-                                                                }else{
+                                                                    Log::info($sele->student_name.''.'Not selected');
+                                                                }elseif(${$dep['department_name'].'total_seats_Rural_poor_students'} >0){
                                                                     $ruralandpoorData->student_id = $sele->id;
                                                                     $ruralandpoorData->student_name = $sele->student_name;
                                                                     $ruralandpoorData->register_no = $sele->application_no;
+                                                                    $ruralandpoorData->year_of_selection = $sele->year_of_addmission;
                                                                     $ruralandpoorData->department = $dep['department_name'];
                                                                     $ruralandpoorData->cut_off = $sele->cut_off;
-                                                                    $ruralandpoorData->mode_choice = 'Choice 1';
+                                                                    $ruralandpoorData->mode_choice = 'Choice 2';
+                                                                    $ruralandpoorData->paid_stauts = 'Not_paid';
                                                                     $ruralandpoorData->save();
-                                                                    Log::info($sele->student_name.'selected for the department'.$dep['department_name'].  'Based on Proverty or Rurality => choice 1');
+                                                                    Log::info($sele->student_name.'selected for the department'.$dep['department_name'].  'Based on Proverty or Rurality => choice 2');
                                                                     ${$dep['department_name'].'total_seats_Rural_poor_students'}--;
                                                                     Log::info(${$dep['department_name'].'total_seats_Rural_poor_students'});
                                                                 }
-                                                        }
-                                                    }
-                                                    //Checking if the student is a Catholic
-                                                    elseif($sele->catholic_or_non_catholic == 'c'){
-                                                            if(${$dep['department_name'].'total_seats_Roman_catholic'} <=0){
-                                                                //Checking if the student is a Dalith Catholic
-                                                                if($sele->calit_or_non_dalit == 'D'){
-                                                                    if(${$dep['department_name'].'total_seats_Roman_catholic'} <=0){
-                                                                            Log::info('sorry even in choice 2 you didnt get');
-                                                                    }else{
-                                                                        $dalithCatholicData->student_id = $sele->id;
-                                                                        $dalithCatholicData->student_name = $sele->student_name;
-                                                                        $dalithCatholicData->register_no = $sele->application_no;
-                                                                        $dalithCatholicData->department = $dep['department_name'];
-                                                                        $dalithCatholicData->cut_off = $sele->cut_off;
-                                                                        $dalithCatholicData->mode_choice = 'Choice 1';
-                                                                        $dalithCatholicData->save();
-                                                                        Log::info($sele->student_name.'selected for the department'.$dep['department_name'].  'Based on Dalith Catholic Choice 2 =>');
-                                                                        ${$dep['department_name'].'total_seats_Dalit_catholic'}--;
-                                                                        Log::info(${$dep['department_name'].'total_seats_Dalit_catholic'});
-                                                                    }
-                                                                }elseif($sele->poor_or_not_poor == 'P'){
-                                                                    if(${$dep['department_name'].'total_seats_Rural_poor_students'} <=0){
-                                                                        if($sele->choice_2 == $dep['department_name']){
-                                                                            if(${$dep['department_name'].'total_seats_Rural_poor_students'} <=0){
-                                                                                Log::info('You are not selected even in choice 2 of rural and poor');
-                                                                            }
-                                                                            else{
-                                                                                $ruralandpoorData->student_id = $sele->id;
-                                                                                $ruralandpoorData->student_name = $sele->student_name;
-                                                                                $ruralandpoorData->register_no = $sele->application_no;
-                                                                                $ruralandpoorData->department = $dep['department_name'];
-                                                                                $ruralandpoorData->cut_off = $sele->cut_off;
-                                                                                $ruralandpoorData->mode_choice = 'Choice 2';
-                                                                                $ruralandpoorData->save();
-                                                                                Log::info($sele->student_name.'selected for the department'.$dep['department_name'].  'Based on Proverty or Rurality => Choice 2');
-                                                                                ${$dep['department_name'].'total_seats_Rural_poor_students'}--;
-                                                                                Log::info(${$dep['department_name'].'total_seats_Rural_poor_students'});
-                                                                            }
-                                                                        }
-                                                                    }else{
-                                                                        $ruralandpoorData->student_id = $sele->id;
-                                                                        $ruralandpoorData->student_name = $sele->student_name;
-                                                                        $ruralandpoorData->register_no = $sele->application_no;
-                                                                        $ruralandpoorData->department = $dep['department_name'];
-                                                                        $ruralandpoorData->cut_off = $sele->cut_off;
-                                                                        $ruralandpoorData->mode_choice = 'Choice 1';
-                                                                        $ruralandpoorData->save();
-                                                                        Log::info($sele->student_name.'selected for the department'.$dep['department_name'].  'Based on Proverty or Rurality => choice 2');
-                                                                        ${$dep['department_name'].'total_seats_Rural_poor_students'}--;
-                                                                        Log::info(${$dep['department_name'].'total_seats_Rural_poor_students'});
-                                                                    }
-                                                                }
                                                             }
-                                                            //Checking if the student is a Catholic
-                                                            else{
+                                                        }elseif($sele->catholic_or_non_catholic == 'c'){
+                                                            if(${$dep['department_name'].'total_seats_Roman_catholic'} <=0){
+                                                                if($sele->calit_or_non_dalit == 'D'){
+                                                                    $dalithCatholicData->student_id = $sele->id;
+                                                                    $dalithCatholicData->student_name = $sele->student_name;
+                                                                    $dalithCatholicData->register_no = $sele->application_no;
+                                                                    $dalithCatholicData->year_of_selection = $sele->year_of_addmission;
+                                                                    $dalithCatholicData->department = $dep['department_name'];
+                                                                    $dalithCatholicData->cut_off = $sele->cut_off;
+                                                                    $dalithCatholicData->mode_choice = 'Choice 1';
+                                                                    $dalithCatholicData->paid_stauts = 'Not_paid';
+                                                                    $dalithCatholicData->save();
+                                                                    Log::info($sele->student_name.'selected for the department'.$dep['department_name'].  'Based on Dalith Catholic => Choice 2');
+                                                                    ${$dep['department_name'].'total_seats_Dalit_catholic'}--;
+                                                                    Log::info(${$dep['department_name'].'total_seats_Dalit_catholic'});
+                                                                }else{
+                                                                    Log::info($sele->student_name.''.'Not Selected');
+                                                                }
+                                                            }elseif(${$dep['department_name'].'total_seats_Roman_catholic'} > 0){
                                                                 $romanCatholicData->student_id = $sele->id;
                                                                 $romanCatholicData->student_name = $sele->student_name;
                                                                 $romanCatholicData->register_no = $sele->application_no;
+                                                                $romanCatholicData->year_of_selection = $sele->year_of_addmission;
                                                                 $romanCatholicData->department = $dep['department_name'];
                                                                 $romanCatholicData->cut_off = $sele->cut_off;
                                                                 $romanCatholicData->mode_choice = 'Choice 1';
+                                                                $romanCatholicData->paid_stauts = 'Not_paid';
                                                                 $romanCatholicData->save();
                                                                 Log::info($sele->student_name.'selected for the department'.$dep['department_name'].  'Based on Roman Catholic => choice 2');
                                                                 ${$dep['department_name'].'total_seats_Roman_catholic'}--;                                    
                                                                 Log::info(${$dep['department_name'].'total_seats_Roman_catholic'});
                                                             }
+                                                        }
+                                                    }elseif(${$dep['department_name'].'total_seats_opencatholic'} >0){
+                                                        $openquotaData->student_id = $sele->id;
+                                                        $openquotaData->student_name = $sele->student_name;
+                                                        $openquotaData->register_no = $sele->application_no;
+                                                        $openquotaData->year_of_selection = $sele->year_of_addmission;
+                                                        $openquotaData->department = $dep['department_name'];
+                                                        $openquotaData->cut_off = $sele->cut_off;
+                                                        $openquotaData->mode_choice = 'Choice 2';
+                                                        $openquotaData->paid_stauts = 'Not_paid';
+                                                        $openquotaData->save();
+                                                        Log::info($sele->student_name.'selected for the department'.$dep['department_name'].  'Based of OpenQuota => Choice 2');
+                                                        ${$dep['department_name'].'total_seats_opencatholic'}--;
+                                                        Log::info(${$dep['department_name'].'total_seats_opencatholic'});
                                                     }
+                                                }
                                             }
-                                            //If there are seats in open quota the users will be alloted seats with this logic
-                                            elseif(${$dep['department_name'].'total_seats_opencatholic'} >0){
-                                                $openquotaData->student_id = $sele->id;
-                                                $openquotaData->student_name = $sele->student_name;
-                                                $openquotaData->register_no = $sele->application_no;
-                                                $openquotaData->department = $dep['department_name'];
-                                                $openquotaData->cut_off = $sele->cut_off;
-                                                $openquotaData->mode_choice = 'Choice 1';
-                                                $openquotaData->save();
-                                                Log::info($sele->student_name.'selected for the department'.$dep['department_name'].  'Based of OpenQuota => Choice 2');
-                                                ${$dep['department_name'].'total_seats_opencatholic'}--;
-                                                Log::info(${$dep['department_name'].'total_seats_opencatholic'});
-                                            }
-                                        }
-                                    } 
-                                }else{
+                                    //Selection list 2
+                                    //Selection list 2
+                                }elseif(${$dep['department_name'].'total_seats_Rural_poor_students'} >0){
                                     $ruralandpoorData->student_id = $sele->id;
                                     $ruralandpoorData->student_name = $sele->student_name;
                                     $ruralandpoorData->register_no = $sele->application_no;
+                                    $ruralandpoorData->year_of_selection = $sele->year_of_addmission;
                                     $ruralandpoorData->department = $dep['department_name'];
                                     $ruralandpoorData->cut_off = $sele->cut_off;
                                     $ruralandpoorData->mode_choice = 'Choice 1';
+                                    $ruralandpoorData->paid_stauts = 'Not_paid';
                                     $ruralandpoorData->save();
                                     Log::info($sele->student_name.'selected for the department'.$dep['department_name'].  'Based on Proverty or Rurality => choice 1');
                                     ${$dep['department_name'].'total_seats_Rural_poor_students'}--;
                                     Log::info(${$dep['department_name'].'total_seats_Rural_poor_students'});
                                 }
                             }
-                        }
-                        elseif($sele->catholic_or_non_catholic == 'c'){
+                        }elseif($sele->catholic_or_non_catholic == 'c'){
                             if(${$dep['department_name'].'total_seats_Roman_catholic'} <=0){
-                                //Checking if the student is a Dalith Catholic
-                                if($sele->poor_or_not_poor == 'P'){
-
-                                }
-                                elseif($sele->calit_or_non_dalit == 'D'){
-                                    if(${$dep['department_name'].'total_seats_Roman_catholic'} <=0){
-                                            //Choice 2 checking
-                                            foreach($dept_name as $dep){
-                                                //Checking if the department name in the Selection list and the database matches
-                                                if($sele->choice_2 == $dep['department_name']){
-                                                    //Checking if the seats for open quota has closed
-                                                    if(${$dep['department_name'].'total_seats_opencatholic'} <=0){
-                                                         //Checking if the student is Non Catholic
-                                                         if($sele->catholic_or_non_catholic == 'NC'){
-                                                            //Checking if the student is from a Poor and a Rural Background
-                                                            if($sele->poor_or_not_poor == 'P'){
-                                                                    if(${$dep['department_name'].'total_seats_Rural_poor_students'} <=0){
-                                                                        if($sele->choice_2 == $dep['department_name']){
-                                                                            if(${$dep['department_name'].'total_seats_Rural_poor_students'} <=0){
-                                                                                Log::info('You are not selected');
-                                                                            }
-                                                                            else{
-                                                                                $ruralandpoorData->student_id = $sele->id;
-                                                                                $ruralandpoorData->student_name = $sele->student_name;
-                                                                                $ruralandpoorData->register_no = $sele->application_no;
-                                                                                $ruralandpoorData->department = $dep['department_name'];
-                                                                                $ruralandpoorData->cut_off = $sele->cut_off;
-                                                                                $ruralandpoorData->mode_choice = 'Choice 2';
-                                                                                $ruralandpoorData->save();
-                                                                                Log::info($sele->student_name.'selected for the department'.$dep['department_name'].  'Based on Proverty or Rurality => Choice 2');
-                                                                                ${$dep['department_name'].'total_seats_Rural_poor_students'}--;
-                                                                                Log::info(${$dep['department_name'].'total_seats_Rural_poor_students'});
-                                                                            }
-                                                                        }
-                                                                    }else{
-                                                                        $ruralandpoorData->student_id = $sele->id;
-                                                                        $ruralandpoorData->student_name = $sele->student_name;
-                                                                        $ruralandpoorData->register_no = $sele->application_no;
-                                                                        $ruralandpoorData->department = $dep['department_name'];
-                                                                        $ruralandpoorData->cut_off = $sele->cut_off;
-                                                                        $ruralandpoorData->mode_choice = 'Choice 1';
-                                                                        $ruralandpoorData->save();
-                                                                        Log::info($sele->student_name.'selected for the department'.$dep['department_name'].  'Based on Proverty or Rurality => choice 1');
-                                                                        ${$dep['department_name'].'total_seats_Rural_poor_students'}--;
-                                                                        Log::info(${$dep['department_name'].'total_seats_Rural_poor_students'});
-                                                                    }
-                                                            }
-                                                        }
-                                                        //Checking if the student is a Catholic
-                                                        elseif($sele->catholic_or_non_catholic == 'c'){
-                                                                if(${$dep['department_name'].'total_seats_Roman_catholic'} <=0){
-                                                                    //Checking if the student is a Dalith Catholic
-                                                                    if($sele->calit_or_non_dalit == 'D'){
-                                                                        if(${$dep['department_name'].'total_seats_Roman_catholic'} <=0){
-                                                                                Log::info('sorry even in choice 2 you didnt get');
-                                                                        }else{
-                                                                            $dalithCatholicData->student_id = $sele->id;
-                                                                            $dalithCatholicData->student_name = $sele->student_name;
-                                                                            $dalithCatholicData->register_no = $sele->application_no;
-                                                                            $dalithCatholicData->department = $dep['department_name'];
-                                                                            $dalithCatholicData->cut_off = $sele->cut_off;
-                                                                            $dalithCatholicData->mode_choice = 'Choice 1';
-                                                                            $dalithCatholicData->save();
-                                                                            Log::info($sele->student_name.'selected for the department'.$dep['department_name'].  'Based on Dalith Catholic Choice 2 =>');
-                                                                            ${$dep['department_name'].'total_seats_Dalit_catholic'}--;
-                                                                            Log::info(${$dep['department_name'].'total_seats_Dalit_catholic'});
-                                                                        }
-                                                                    }
-                                                                }
-                                                                //Checking if the student is a Catholic
-                                                                else{
-                                                                    $romanCatholicData->student_id = $sele->id;
-                                                                    $romanCatholicData->student_name = $sele->student_name;
-                                                                    $romanCatholicData->register_no = $sele->application_no;
-                                                                    $romanCatholicData->department = $dep['department_name'];
-                                                                    $romanCatholicData->cut_off = $sele->cut_off;
-                                                                    $romanCatholicData->mode_choice = 'Choice 1';
-                                                                    $romanCatholicData->save();
-                                                                    Log::info($sele->student_name.'selected for the department'.$dep['department_name'].  'Based on Roman Catholic => choice 2');
-                                                                    ${$dep['department_name'].'total_seats_Roman_catholic'}--;                                    
-                                                                    Log::info(${$dep['department_name'].'total_seats_Roman_catholic'});
-                                                                }
+                                if($sele->calit_or_non_dalit == 'D'){
+                                    $dalithCatholicData->student_id = $sele->id;
+                                    $dalithCatholicData->student_name = $sele->student_name;
+                                    $dalithCatholicData->register_no = $sele->application_no;
+                                    $dalithCatholicData->year_of_selection = $sele->year_of_addmission;
+                                    $dalithCatholicData->department = $dep['department_name'];
+                                    $dalithCatholicData->cut_off = $sele->cut_off;
+                                    $dalithCatholicData->mode_choice = 'Choice 1';
+                                    $dalithCatholicData->paid_stauts = 'Not_paid';
+                                    $dalithCatholicData->save();
+                                    Log::info($sele->student_name.'selected for the department'.$dep['department_name'].  'Based on Dalith Catholic => Choice 1');
+                                    ${$dep['department_name'].'total_seats_Dalit_catholic'}--;
+                                    Log::info(${$dep['department_name'].'total_seats_Dalit_catholic'});
+                                }else{
+                                    //Selection list 2
+                                    //Selection list 2
+                                    foreach($dept_name as $dep){
+                                        //Checking if the department name in the Selection list and the database matches
+                                        if($sele->choice_2 == $dep['department_name']){
+                                            if(${$dep['department_name'].'total_seats_opencatholic'} <=0){
+                                                if($sele->catholic_or_non_catholic == 'NC'){
+                                                    if($sele->poor_or_not_poor == 'P'){
+                                                        if(${$dep['department_name'].'total_seats_Rural_poor_students'} <=0){
+                                                            Log::info($sele->stuent_name.''.'Not selected');
+                                                        }elseif(${$dep['department_name'].'total_seats_Rural_poor_students'} >0){
+                                                            $ruralandpoorData->student_id = $sele->id;
+                                                            $ruralandpoorData->student_name = $sele->student_name;
+                                                            $ruralandpoorData->register_no = $sele->application_no;
+                                                            $ruralandpoorData->year_of_selection = $sele->year_of_addmission;
+                                                            $ruralandpoorData->department = $dep['department_name'];
+                                                            $ruralandpoorData->cut_off = $sele->cut_off;
+                                                            $ruralandpoorData->mode_choice = 'Choice 2';
+                                                            $ruralandpoorData->paid_stauts = 'Not_paid';
+                                                            $ruralandpoorData->save();
+                                                            Log::info($sele->student_name.'selected for the department'.$dep['department_name'].  'Based on Proverty or Rurality => choice 2');
+                                                            ${$dep['department_name'].'total_seats_Rural_poor_students'}--;
+                                                            Log::info(${$dep['department_name'].'total_seats_Rural_poor_students'});
                                                         }
                                                     }
-                                                    //If there are seats in open quota the users will be alloted seats with this logic
-                                                    elseif(${$dep['department_name'].'total_seats_opencatholic'} >0){
-                                                        $openquotaData->student_id = $sele->id;
-                                                        $openquotaData->student_name = $sele->student_name;
-                                                        $openquotaData->register_no = $sele->application_no;
-                                                        $openquotaData->department = $dep['department_name'];
-                                                        $openquotaData->cut_off = $sele->cut_off;
-                                                        $openquotaData->mode_choice = 'Choice 1';
-                                                        $openquotaData->save();
-                                                        Log::info($sele->student_name.'selected for the department'.$dep['department_name'].  'Based of OpenQuota => Choice 1');
-                                                        ${$dep['department_name'].'total_seats_opencatholic'}--;
-                                                        Log::info(${$dep['department_name'].'total_seats_opencatholic'});
+                                                }elseif($sele->catholic_or_non_catholic == 'c'){
+                                                    if(${$dep['department_name'].'total_seats_Roman_catholic'} <=0){
+                                                        if($sele->calit_or_non_dalit == 'D'){
+                                                            $dalithCatholicData->student_id = $sele->id;
+                                                            $dalithCatholicData->student_name = $sele->student_name;
+                                                            $dalithCatholicData->register_no = $sele->application_no;
+                                                            $dalithCatholicData->year_of_selection = $sele->year_of_addmission;
+                                                            $dalithCatholicData->department = $dep['department_name'];
+                                                            $dalithCatholicData->cut_off = $sele->cut_off;
+                                                            $dalithCatholicData->mode_choice = 'Choice 1';
+                                                            $dalithCatholicData->paid_stauts = 'Not_paid';
+                                                            $dalithCatholicData->save();
+                                                            Log::info($sele->student_name.'selected for the department'.$dep['department_name'].  'Based on Dalith Catholic => Choice 2');
+                                                            ${$dep['department_name'].'total_seats_Dalit_catholic'}--;
+                                                            Log::info(${$dep['department_name'].'total_seats_Dalit_catholic'});
+                                                        }else{
+                                                            Log::info($sele->student_name.''.'Not Selected');
+                                                        }
+                                                    }elseif(${$dep['department_name'].'total_seats_Roman_catholic'} > 0){
+                                                        $romanCatholicData->student_id = $sele->id;
+                                                        $romanCatholicData->student_name = $sele->student_name;
+                                                        $romanCatholicData->register_no = $sele->application_no;
+                                                        $romanCatholicData->year_of_selection = $sele->year_of_addmission;
+                                                        $romanCatholicData->department = $dep['department_name'];
+                                                        $romanCatholicData->cut_off = $sele->cut_off;
+                                                        $romanCatholicData->mode_choice = 'Choice 1';
+                                                        $romanCatholicData->paid_stauts = 'Not_paid';
+                                                        $romanCatholicData->save();
+                                                        Log::info($sele->student_name.'selected for the department'.$dep['department_name'].  'Based on Roman Catholic => choice 2');
+                                                        ${$dep['department_name'].'total_seats_Roman_catholic'}--;                                    
+                                                        Log::info(${$dep['department_name'].'total_seats_Roman_catholic'});
                                                     }
                                                 }
-                                            }  
-                                    }else{
-                                        $dalithCatholicData->student_id = $sele->id;
-                                        $dalithCatholicData->student_name = $sele->student_name;
-                                        $dalithCatholicData->register_no = $sele->application_no;
-                                        $dalithCatholicData->department = $dep['department_name'];
-                                        $dalithCatholicData->cut_off = $sele->cut_off;
-                                        $dalithCatholicData->mode_choice = 'Choice 1';
-                                        $dalithCatholicData->save();
-                                        Log::info($sele->student_name.'selected for the department'.$dep['department_name'].  'Based on Dalith Catholic =>');
-                                        ${$dep['department_name'].'total_seats_Dalit_catholic'}--;
-                                        Log::info(${$dep['department_name'].'total_seats_Dalit_catholic'});
+                                            }elseif(${$dep['department_name'].'total_seats_opencatholic'} >0){
+                                                $openquotaData->student_id = $sele->id;
+                                                $openquotaData->student_name = $sele->student_name;
+                                                $openquotaData->register_no = $sele->application_no;
+                                                $openquotaData->year_of_selection = $sele->year_of_addmission;
+                                                $openquotaData->department = $dep['department_name'];
+                                                $openquotaData->cut_off = $sele->cut_off;
+                                                $openquotaData->mode_choice = 'Choice 2';
+                                                $openquotaData->paid_stauts = 'Not_paid';
+                                                $openquotaData->save();
+                                                Log::info($sele->student_name.'selected for the department'.$dep['department_name'].  'Based of OpenQuota => Choice 2');
+                                                ${$dep['department_name'].'total_seats_opencatholic'}--;
+                                                Log::info(${$dep['department_name'].'total_seats_opencatholic'});
+                                            }
+                                        }
                                     }
+                                    //Selection list 2
+                                    //Selection list 2
                                 }
-                            }
-                            //Checking if the student is a Catholic
-                            else{
+                            }elseif(${$dep['department_name'].'total_seats_Roman_catholic'} > 0){
                                 $romanCatholicData->student_id = $sele->id;
                                 $romanCatholicData->student_name = $sele->student_name;
                                 $romanCatholicData->register_no = $sele->application_no;
+                                $romanCatholicData->year_of_selection = $sele->year_of_addmission;
                                 $romanCatholicData->department = $dep['department_name'];
                                 $romanCatholicData->cut_off = $sele->cut_off;
                                 $romanCatholicData->mode_choice = 'Choice 1';
+                                $romanCatholicData->paid_stauts = 'Not_paid';
                                 $romanCatholicData->save();
                                 Log::info($sele->student_name.'selected for the department'.$dep['department_name'].  'Based on Roman Catholic => choice 1');
                                 ${$dep['department_name'].'total_seats_Roman_catholic'}--;                                    
                                 Log::info(${$dep['department_name'].'total_seats_Roman_catholic'});
                             }
                         }
-                    }
-                    //If there are seats in open quota the users will be alloted seats with this logic
-                    elseif(${$dep['department_name'].'total_seats_opencatholic'} >0){
+                    }elseif(${$dep['department_name'].'total_seats_opencatholic'} >0){
                         $openquotaData->student_id = $sele->id;
                         $openquotaData->student_name = $sele->student_name;
                         $openquotaData->register_no = $sele->application_no;
+                        $openquotaData->year_of_selection = $sele->year_of_addmission;
                         $openquotaData->department = $dep['department_name'];
                         $openquotaData->cut_off = $sele->cut_off;
                         $openquotaData->mode_choice = 'Choice 1';
+                        $openquotaData->paid_stauts = 'Not_paid';
                         $openquotaData->save();
                         Log::info($sele->student_name.'selected for the department'.$dep['department_name'].  'Based of OpenQuota => Choice 1');
                         ${$dep['department_name'].'total_seats_opencatholic'}--;

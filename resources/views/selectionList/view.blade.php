@@ -234,6 +234,7 @@
                        type: 'GET',
                         data: function ( d ){
                             d.department_name = $('#department_select').val();
+                            d.year_of_selection = $('#year_of_selection').val();
                         }
                    },
                    "columnDefs": [
@@ -275,6 +276,11 @@
                     myTable.ajax.reload();
                     myTable.ajax.reload( null, false );
                 });
+                $('#year_of_selection').on('change', function(){
+                    var myTable = $('#example1').DataTable();  
+                    myTable.ajax.reload();
+                    myTable.ajax.reload( null, false );
+                });
             });
             // For the next Tab 2
             $(document).ready(function(){
@@ -288,17 +294,9 @@
                        type: 'GET',
                         data: function ( d ){
                             d.department_name = $('#department_select1').val();
+                            d.year_of_selection = $('#year_of_selection1').val();
                         }
                    },
-                   "columnDefs": [
-                                { "orderable": false, "targets":[0] },
-                                { "orderable": false, "targets":[1] },
-                                { "orderable": false, "targets":[2] },
-                                { "orderable": false, "targets":[3] },
-                                { "orderable": false, "targets":[4] },
-                                { "orderable": false, "targets":[5] },
-                        
-                            ],
                    "columns":[
                        {"data":"student_id", "name":"id"},
                        {"data":"student_name", "name":"application_id"},
@@ -329,6 +327,11 @@
                     myTable.ajax.reload();
                     myTable.ajax.reload( null, false );
                 });
+                $('#year_of_selection1').on('change', function(){
+                    var myTable = $('#example2').DataTable();  
+                    myTable.ajax.reload();
+                    myTable.ajax.reload( null, false );
+                });
             });
             //for the tab 3
             $(document).ready(function(){
@@ -342,6 +345,8 @@
                        type: 'GET',
                         data: function ( d ){
                             d.department_name = $('#department_selec2').val();
+                            d.year_of_selection = $('#year_of_selection2').val();
+
                         }
                    },
                    "columnDefs": [
@@ -383,6 +388,11 @@
                     myTable.ajax.reload();
                     myTable.ajax.reload( null, false );
                 });
+                $('#year_of_selection2').on('change', function(){
+                    var myTable = $('#example3').DataTable();  
+                    myTable.ajax.reload();
+                    myTable.ajax.reload( null, false );
+                });
             });
             //For tab 4
             $(document).ready(function(){
@@ -396,6 +406,8 @@
                        type: 'GET',
                         data: function ( d ){
                             d.department_name = $('#department_selec3').val();
+                            d.year_of_selection = $('#year_of_selection3').val();
+
                         }
                    },
                    "columnDefs": [
@@ -433,6 +445,11 @@
                } );
               
                 $('#department_selec3').on('change', function(){
+                    var myTable = $('#example4').DataTable();  
+                    myTable.ajax.reload();
+                    myTable.ajax.reload( null, false );
+                });
+                $('#year_of_selection3').on('change', function(){
                     var myTable = $('#example4').DataTable();  
                     myTable.ajax.reload();
                     myTable.ajax.reload( null, false );

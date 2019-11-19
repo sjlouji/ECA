@@ -9,10 +9,13 @@ class selection_list1__open_quota extends Model
     protected $fillable = [
         'id',
         'student_id',
+        'year_of_selection',
         'student_name',
         'register_no',
         'department',
         'cut_off',
         'mode_choice',
+        'paid_stauts',
+
   ];
 }

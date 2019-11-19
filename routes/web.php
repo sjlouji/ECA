@@ -75,5 +75,10 @@ Route::get('/selectionList/selectionlist1RP/data',[ 'as' => 'selectionList.selec
 //Sms Template
 Route::get('/sms', 'SmsController@index');
 Route::get('/sms/add',[ 'as' => 'sms.add', 'uses' => 'SmsController@addTemplate']);
-
+Route::post('/sms/addtemplate',[ 'as' => 'sms.addtemplate', 'uses' => 'SmsController@add']);
+Route::get('/sms/data',[ 'as' => 'sms.data', 'uses' => 'SmsController@data']);
+Route::get('/sms/{id}/delete','SmsController@delete');
+Route::get('/sms/update','SmsController@editUpdate')->middleware('can:isAdmin');
+Route::get('/sms/{id}/edit','SmsController@edit')->middleware('can:isAdmin');
+Route::get('/sms/{id}/view','SmsController@view')->middleware('can:isAdmin');
 //Sms Template
