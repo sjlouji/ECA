@@ -259,7 +259,7 @@
                     }],
                     'order': [[1, 'asc']],
                    "columns":[
-                       {"data":"student_id"},
+                       {"data":"id"},
                        {"data":"student_id", "name":"id"},
                        {"data":"student_name", "name":"application_id"},
                        {"data":"department", "name":"department"},
@@ -304,8 +304,39 @@
                             if($.contains(document, this)){
                                 if(this.checked){
                                     id.push($(this).val());
-                                    console.log(id);
+                                    var department_name = $('#department_select').val();
+                                    var year_of_selection = $('#year_of_selection').val();
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '{{ url("/selectionList/paidStatus") }}',
+                                        data: {
+                                            id : id,
+                                            department_name : department_name,
+                                            year_of_selection : year_of_selection,
+                                            quota : 'selection_list1__open_quotas',
+                                            _token        : '{!! csrf_token() !!}'
+                                        },
+                                        dataType: 'json',
+                                        encode: true
+                                    })
+                                    .done(function (response) {
+                                        swal({
+                                            title: "Success",
+                                            text: response.message,
+                                            type: "success",
+                                            allowEscapeKey: false
+                                        },
+                                        function() {
+                                            window.location.href="{!! url('/selectionList') !!}";
+                                        });
+                                    })
+                                    .fail(function (jqXHR, textStatus, errorThrown) {
+                                        var errors = errorThrown;
+                                        swal(textStatus);                                          
+                                    }); 
                                 }
+                                console.log(id);
+                                
                             }
                         });
                     }
@@ -359,7 +390,7 @@
                     }],
                     'order': [[1, 'asc']],
                    "columns":[
-                       {"data":"student_id"},
+                       {"data":"id"},
                        {"data":"student_id", "name":"id"},
                        {"data":"student_name", "name":"application_id"},
                        {"data":"department", "name":"department"},
@@ -415,8 +446,36 @@
                             if($.contains(document, this)){
                                 if(this.checked){
                                     id.push($(this).val());
-                                    console.log(id);
-                                }
+                                    var department_name = $('#department_select').val();
+                                    var year_of_selection = $('#year_of_selection').val();
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '{{ url("/selectionList/paidStatus") }}',
+                                        data: {
+                                            id : id,
+                                            department_name : department_name,
+                                            year_of_selection : year_of_selection,
+                                            quota : 'selection_list1__roman_catholics',
+                                            _token        : '{!! csrf_token() !!}'
+                                        },
+                                        dataType: 'json',
+                                        encode: true
+                                    })
+                                    .done(function (response) {
+                                        swal({
+                                            title: "Success",
+                                            text: response.message,
+                                            type: "success",
+                                            allowEscapeKey: false
+                                        },
+                                        function() {
+                                            window.location.href="{!! url('/selectionList') !!}";
+                                        });
+                                    })
+                                    .fail(function (jqXHR, textStatus, errorThrown) {
+                                        var errors = errorThrown;
+                                        swal(textStatus);                                          
+                                    });                                 }
                             }
                         });
                     }
@@ -461,7 +520,7 @@
                     }],
                     'order': [[1, 'asc']],
                    "columns":[
-                       {"data":"student_id"},
+                       {"data":"id"},
                        {"data":"student_id", "name":"id"},
                        {"data":"student_name", "name":"application_id"},
                        {"data":"department", "name":"department"},
@@ -507,7 +566,36 @@
                             if($.contains(document, this)){
                                 if(this.checked){
                                     id.push($(this).val());
-                                    console.log(id);
+                                    var department_name = $('#department_select').val();
+                                    var year_of_selection = $('#year_of_selection').val();
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '{{ url("/selectionList/paidStatus") }}',
+                                        data: {
+                                            id : id,
+                                            department_name : department_name,
+                                            year_of_selection : year_of_selection,
+                                            quota : 'selection_list1__dalith_catholics',
+                                            _token        : '{!! csrf_token() !!}'
+                                        },
+                                        dataType: 'json',
+                                        encode: true
+                                    })
+                                    .done(function (response) {
+                                        swal({
+                                            title: "Success",
+                                            text: response.message,
+                                            type: "success",
+                                            allowEscapeKey: false
+                                        },
+                                        function() {
+                                            window.location.href="{!! url('/selectionList') !!}";
+                                        });
+                                    })
+                                    .fail(function (jqXHR, textStatus, errorThrown) {
+                                        var errors = errorThrown;
+                                        swal(textStatus);                                          
+                                    }); 
                                 }
                             }
                         });
@@ -563,7 +651,7 @@
                     }],
                     'order': [[1, 'asc']],
                    "columns":[
-                       {"data":"student_id"},
+                       {"data":"id"},
                        {"data":"student_id", "name":"id"},
                        {"data":"student_name", "name":"application_id"},
                        {"data":"department", "name":"department"},
@@ -609,7 +697,36 @@
                             if($.contains(document, this)){
                                 if(this.checked){
                                     id.push($(this).val());
-                                    console.log(id);
+                                    var department_name = $('#department_select').val();
+                                    var year_of_selection = $('#year_of_selection').val();
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '{{ url("/selectionList/paidStatus") }}',
+                                        data: {
+                                            id : id,
+                                            department_name : department_name,
+                                            year_of_selection : year_of_selection,
+                                            quota : 'selection_list1__rural_and__poors',
+                                            _token        : '{!! csrf_token() !!}'
+                                        },
+                                        dataType: 'json',
+                                        encode: true
+                                    })
+                                    .done(function (response) {
+                                        swal({
+                                            title: "Success",
+                                            text: response.message,
+                                            type: "success",
+                                            allowEscapeKey: false
+                                        },
+                                        function() {
+                                            window.location.href="{!! url('/selectionList') !!}";
+                                        });
+                                    })
+                                    .fail(function (jqXHR, textStatus, errorThrown) {
+                                        var errors = errorThrown;
+                                        swal(textStatus);                                          
+                                    }); 
                                 }
                             }
                         });
@@ -638,7 +755,6 @@
                     myTable.ajax.reload( null, false );
                 });
             });
-
         </script>
 
     </body>

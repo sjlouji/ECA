@@ -74,6 +74,7 @@ Route::get('/selectionList/selectionlist1OQ/','SelectionListController@selection
 Route::get('/selectionList/selectionlist1RC/','SelectionListController@selectionlist1RCExports')->middleware('can:isAdmin');
 Route::get('/selectionList/selectionlist1DC/','SelectionListController@selectionlist1DCExports')->middleware('can:isAdmin');
 Route::get('/selectionList/selectionlist1RP/','SelectionListController@selectionlist1RPExports')->middleware('can:isAdmin');
+Route::post('/selectionList/paidStatus/','SelectionListController@editPaidStaatus')->middleware('can:isAdmin');
 
 //Selection List Route Ends
 
