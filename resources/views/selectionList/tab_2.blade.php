@@ -51,5 +51,6 @@
                 </section>
 
 @section('scripts')
-
+<script>
+</script>
 @stop
