@@ -70,6 +70,11 @@ Route::get('/selectionList/selectionlist1OQ/data',[ 'as' => 'selectionList.selec
 Route::get('/selectionList/selectionlist1RC/data',[ 'as' => 'selectionList.selectionlist1RC.data', 'uses' => 'SelectionListController@selectionList1RCData']);
 Route::get('/selectionList/selectionlist1DC/data',[ 'as' => 'selectionList.selectionlist1DC.data', 'uses' => 'SelectionListController@selectionList1DCData']);
 Route::get('/selectionList/selectionlist1RP/data',[ 'as' => 'selectionList.selectionlist1RP.data', 'uses' => 'SelectionListController@selectionList1RPData']);
+Route::get('/selectionList/selectionlist1OQ/','SelectionListController@selectionlist1OQExports')->middleware('can:isAdmin');
+Route::get('/selectionList/selectionlist1RC/','SelectionListController@selectionlist1RCExports')->middleware('can:isAdmin');
+Route::get('/selectionList/selectionlist1DC/','SelectionListController@selectionlist1DCExports')->middleware('can:isAdmin');
+Route::get('/selectionList/selectionlist1RP/','SelectionListController@selectionlist1RPExports')->middleware('can:isAdmin');
+
 //Selection List Route Ends
 
 //Sms Template

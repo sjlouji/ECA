@@ -17,8 +17,12 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
         <link rel="stylesheet" href="{{asset('/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
-
-
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"/>
+        <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css"/>
+        <link type="text/css" href="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/css/dataTables.checkboxes.css" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ asset('/bower_components/admin-lte/plugins/iCheck/flat/blue.css') }}" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/4.4.95/css/materialdesignicons.css"/>
         <style>
             .btn{
                 margin-left:10px;
@@ -36,6 +40,7 @@
             {
                 display:none;
             }
+
         </style>
     </head>
     <body class="skin-blue fixed sidebar-mini sidebar-mini-expand-feature">
@@ -55,13 +60,13 @@
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <img src="https://user-images.githubusercontent.com/38372696/64544767-32344000-d345-11e9-9daa-f25bc3cb8cdd.png" class="user-image" alt="User Image">
-                                    <span class="hidden-xs">{{ Auth::user()->name }}</span>
+                                    {{-- <span class="hidden-xs">{{ Auth::user()->name }}</span> --}}
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li class="user-header">
                                     <img src="https://user-images.githubusercontent.com/38372696/64544767-32344000-d345-11e9-9daa-f25bc3cb8cdd.png" class="img-circle" alt="User Image">
                                     <p>
-                                        {{ Auth::user()->name }}
+                                        {{-- {{ Auth::user()->name }} --}}
                                         <small>Member since Nov. 2012</small>
                                     </p>
                                     </li>
@@ -96,7 +101,7 @@
                             <img src="https://user-images.githubusercontent.com/38372696/64544767-32344000-d345-11e9-9daa-f25bc3cb8cdd.png" class="img-circle" alt="User Image">
                         </div>
                         <div class="pull-left info">
-                            <p>{{ Auth::user()->name }}</p>
+                            {{-- <p>{{ Auth::user()->name }}</p> --}}
                             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                         </div>
                     </div>
@@ -215,7 +220,7 @@
         <script src="{{asset('/bower_components/admin-lte/plugins/jvectormap/jquery-jvectormap-world-mill-en.js')}}" type="text/javascript"></script>
         <script src="{{asset('/bower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}" type="text/javascript"></script>
         <script src="{{asset('/bower_components/chart.js/Chart.js')}}" type="text/javascript"></script>
-        
+        <script src="{{ asset ('/bower_components/admin-lte/plugins/iCheck/icheck.js') }}"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
@@ -227,12 +232,13 @@
 
         <script>
              $(document).ready(function(){
+     
                var table = $('#example1').DataTable({
                    "processing" : true,
                    "serverSide" : true,
                    "bAutoWidth": false,
                    "bFilter": false,
-                   
+                   "fixedHeader":    true,
                    "ajax":{
                        "url": "{{url("selectionList/selectionlist1OQ/data")}}",
                        type: 'GET',
@@ -241,28 +247,68 @@
                             d.year_of_selection = $('#year_of_selection').val();
                         }
                    },
-                   "columnDefs": [
-                                { "orderable": false, "targets":[0] },
-                                { "orderable": false, "targets":[1] },
-                                { "orderable": false, "targets":[2] },
-                                { "orderable": false, "targets":[3] },
-                                { "orderable": false, "targets":[4] },
-                                { "orderable": false, "targets":[5] },
-                        
-                            ],
+                   'columnDefs': [{
+                        'targets': 0,
+                        'searchable': false,
+                        'orderable': false,
+                        'className': 'dt-body-center',
+                        'render': function (data, type, full, meta){
+                            console.log($('<div/>').text(data).html());
+                            return '<div class="pretty p-icon p-jelly"><input type="checkbox" id="checkDe" name="id[]" value="' + $('<div/>').text(data).html() + '"><div class="state p-primary"><i class="icon mdi mdi-check"></i><label></label></div></div>';
+                        }
+                    }],
+                    'order': [[1, 'asc']],
                    "columns":[
+                       {"data":"student_id"},
                        {"data":"student_id", "name":"id"},
                        {"data":"student_name", "name":"application_id"},
                        {"data":"department", "name":"department"},
                        {"data":"mode_choice", "name":"mode_choice"},
                        {"data":"cut_off", "name":"cut_off"},
-                       {"data":"cut_off", "name":"cut_off"},
+                       {"data":"paid_stauts", "name":"paid_stauts"},
                    ]
 
                });
                $('#example1 tfoot th ').each( function () {
                             var title = $(this).text();
-                            $(this).html( '<input type="text" class="form-control" placeholder="Search '+title+'" />' );
+                            $(this).html( '<input id="OQCheck" type="text" class="form-control" placeholder="Search '+title+'" />' );
+                });
+                $('#example-select-all1').on('click', function(){
+                    var rows = table.rows({ 'search': 'applied' }).nodes();
+                    $('input[type="checkbox"]', rows).prop('checked', this.checked);
+                });
+                $('#example1 tbody').on('change', 'input[type="checkbox"]', function(){
+                    if(!this.checked){
+                        var el = $('#example-select-all').get(0);
+                        if(el && el.checked && ('indeterminate' in el)){
+                            el.indeterminate = true;
+                        }
+                    }
+                });
+                $('#selectionListView1').click(function(){
+                    if (!$('#checkDe').is(':checked')) {
+                        swal({
+                            title: "Null Selection",
+                            type: "warning",
+
+                            text: "Select atleast on Entity to change the paid Status",
+                            dangerMode: true,
+                            });
+                        
+                    }else if($('#checkDe').is(':checked')){
+                        var id = [];
+                        var form = this;
+                    
+                        table.$('input[type="checkbox"]').each(function(){
+                            
+                            if($.contains(document, this)){
+                                if(this.checked){
+                                    id.push($(this).val());
+                                    console.log(id);
+                                }
+                            }
+                        });
+                    }
                 });
                table.columns().every( function () {
                    var that = this;
@@ -274,7 +320,6 @@
                        }
                    } );
                } );
-               
                 $('#department_select').on('change', function(){
                     var myTable = $('#example1').DataTable();  
                     myTable.ajax.reload();
@@ -288,6 +333,7 @@
             });
             // For the next Tab 2
             $(document).ready(function(){
+               
                var table = $('#example2').DataTable({
                    "processing" : true,
                    "serverSide" : true,
@@ -301,13 +347,25 @@
                             d.year_of_selection = $('#year_of_selection1').val();
                         }
                    },
+                   'columnDefs': [{
+                        'targets': 0,
+                        'searchable': false,
+                        'orderable': false,
+                        'className': 'dt-body-center',
+                        'render': function (data, type, full, meta){
+                            console.log($('<div/>').text(data).html());
+                            return '<div class="pretty p-icon p-jelly"><input type="checkbox" id="checkDe1" name="id[]" value="' + $('<div/>').text(data).html() + '"><div class="state p-primary"><i class="icon mdi mdi-check"></i><label></label></div></div>';
+                        }
+                    }],
+                    'order': [[1, 'asc']],
                    "columns":[
+                       {"data":"student_id"},
                        {"data":"student_id", "name":"id"},
                        {"data":"student_name", "name":"application_id"},
                        {"data":"department", "name":"department"},
                        {"data":"mode_choice", "name":"mode_choice"},
                        {"data":"cut_off", "name":"cut_off"},
-                       {"data":"cut_off", "name":"cut_off"},
+                       {"data":"paid_stauts", "name":"paid_stauts"},
                    ]
 
                });
@@ -315,6 +373,7 @@
                             var title = $(this).text();
                             $(this).html( '<input type="text" class="form-control" placeholder="Search '+title+'" />' );
                 });
+
                table.columns().every( function () {
                    var that = this;
                    $( 'input', this.footer() ).on( 'keyup change', function () {
@@ -325,7 +384,44 @@
                        }
                    } );
                } );
-           
+                $('#example-select-all2').on('click', function(){
+                    var rows = table.rows({ 'search': 'applied' }).nodes();
+                    $('input[type="checkbox"]', rows).prop('checked', this.checked);
+                });
+                $('#example2 tbody').on('change', 'input[type="checkbox"]', function(){
+                    if(!this.checked){
+                        var el = $('#example-select-all').get(0);
+                        if(el && el.checked && ('indeterminate' in el)){
+                            el.indeterminate = true;
+                        }
+                    }
+                });
+                $('#selectionListView2').click(function(){
+                    if (!$('#checkDe1').is(':checked')) {
+                        swal({
+                            title: "Null Selection",
+                            type: "warning",
+
+                            text: "Select atleast on Entity to change the paid Status",
+                            dangerMode: true,
+                            });
+                        
+                    }else if($('#checkDe1').is(':checked')){
+                        var id = [];
+                        var form = this;
+                    
+                        table.$('input[type="checkbox"]').each(function(){
+                            
+                            if($.contains(document, this)){
+                                if(this.checked){
+                                    id.push($(this).val());
+                                    console.log(id);
+                                }
+                            }
+                        });
+                    }
+                });
+
                 $('#department_select1').on('change', function(){
                     var myTable = $('#example2').DataTable();  
                     myTable.ajax.reload();
@@ -353,28 +449,70 @@
 
                         }
                    },
-                   "columnDefs": [
-                                { "orderable": false, "targets":[0] },
-                                { "orderable": false, "targets":[1] },
-                                { "orderable": false, "targets":[2] },
-                                { "orderable": false, "targets":[3] },
-                                { "orderable": false, "targets":[4] },
-                                { "orderable": false, "targets":[5] },
-                        
-                            ],
+                   'columnDefs': [{
+                        'targets': 0,
+                        'searchable': false,
+                        'orderable': false,
+                        'className': 'dt-body-center',
+                        'render': function (data, type, full, meta){
+                            console.log($('<div/>').text(data).html());
+                            return '<div class="pretty p-icon p-jelly"><input type="checkbox" id="checkDe2" name="id[]" value="' + $('<div/>').text(data).html() + '"><div class="state p-primary"><i class="icon mdi mdi-check"></i><label></label></div></div>';
+                        }
+                    }],
+                    'order': [[1, 'asc']],
                    "columns":[
+                       {"data":"student_id"},
                        {"data":"student_id", "name":"id"},
                        {"data":"student_name", "name":"application_id"},
                        {"data":"department", "name":"department"},
                        {"data":"mode_choice", "name":"mode_choice"},
                        {"data":"cut_off", "name":"cut_off"},
-                       {"data":"cut_off", "name":"cut_off"},
+                       {"data":"paid_stauts", "name":"paid_stauts"},
                    ]
 
                });
                $('#example3 tfoot th ').each( function () {
                             var title = $(this).text();
                             $(this).html( '<input type="text" class="form-control" placeholder="Search '+title+'" />' );
+                });
+                $('#example-select-all3').on('click', function(){
+                    var rows = table.rows({ 'search': 'applied' }).nodes();
+                    $('input[type="checkbox"]', rows).prop('checked', this.checked);
+                });
+                $('#example3 tbody').on('change', 'input[type="checkbox"]', function(){
+                    if(!this.checked){
+                        var el = $('#example-select-all').get(0);
+                        if(el && el.checked && ('indeterminate' in el)){
+                            el.indeterminate = true;
+                        }
+                    }
+                });
+                // Handle form submission event
+                $('#selectionListView3').click(function(){
+                    if (!$('#checkDe2').is(':checked')) {
+                        swal({
+                            title: "Null Selection",
+                            type: "warning",
+
+                            text: "Select atleast on Entity to change the paid Status",
+                            dangerMode: true,
+                            });
+                        
+                    }else if($('#checkDe2').is(':checked')){
+                        var id = [];
+                        var form = this;
+                    
+                        table.$('input[type="checkbox"]').each(function(){
+                            
+                            if($.contains(document, this)){
+                                if(this.checked){
+                                    id.push($(this).val());
+                                    console.log(id);
+                                }
+                            }
+                        });
+                    }
+                   
                 });
                table.columns().every( function () {
                    var that = this;
@@ -386,7 +524,6 @@
                        }
                    } );
                } );
-           
                 $('#department_selec2').on('change', function(){
                     var myTable = $('#example3').DataTable();  
                     myTable.ajax.reload();
@@ -414,28 +551,70 @@
 
                         }
                    },
-                   "columnDefs": [
-                                { "orderable": false, "targets":[0] },
-                                { "orderable": false, "targets":[1] },
-                                { "orderable": false, "targets":[2] },
-                                { "orderable": false, "targets":[3] },
-                                { "orderable": false, "targets":[4] },
-                                { "orderable": false, "targets":[5] },
-                        
-                            ],
+                   'columnDefs': [{
+                        'targets': 0,
+                        'searchable': false,
+                        'orderable': false,
+                        'className': 'dt-body-center',
+                        'render': function (data, type, full, meta){
+                            console.log($('<div/>').text(data).html());
+                            return '<div class="pretty p-icon p-jelly"><input type="checkbox" id="checkDe3" name="id[]" value="' + $('<div/>').text(data).html() + '"><div class="state p-primary"><i class="icon mdi mdi-check"></i><label></label></div></div>';
+                        }
+                    }],
+                    'order': [[1, 'asc']],
                    "columns":[
+                       {"data":"student_id"},
                        {"data":"student_id", "name":"id"},
                        {"data":"student_name", "name":"application_id"},
                        {"data":"department", "name":"department"},
                        {"data":"mode_choice", "name":"mode_choice"},
                        {"data":"cut_off", "name":"cut_off"},
-                       {"data":"cut_off", "name":"cut_off"},
+                       {"data":"paid_stauts", "name":"paid_stauts"},
                    ]
 
                });
                $('#example4 tfoot th ').each( function () {
                             var title = $(this).text();
                             $(this).html( '<input type="text" class="form-control" placeholder="Search '+title+'" />' );
+                });                
+                $('#example-select-all4').on('click', function(){
+                    var rows = table.rows({ 'search': 'applied' }).nodes();
+                    $('input[type="checkbox"]', rows).prop('checked', this.checked);
+                });
+                $('#example4 tbody').on('change', 'input[type="checkbox"]', function(){
+                    if(!this.checked){
+                        var el = $('#example-select-all').get(0);
+                        if(el && el.checked && ('indeterminate' in el)){
+                            el.indeterminate = true;
+                        }
+                    }
+                });
+                // Handle form submission event
+                $('#selectionListView4').click(function(){
+                    if (!$('#checkDe3').is(':checked')) {
+                        swal({
+                            title: "Null Selection",
+                            type: "warning",
+
+                            text: "Select atleast on Entity to change the paid Status",
+                            dangerMode: true,
+                            });
+                        
+                    }else if($('#checkDe3').is(':checked')){
+                        var id = [];
+                        var form = this;
+                    
+                        table.$('input[type="checkbox"]').each(function(){
+                            
+                            if($.contains(document, this)){
+                                if(this.checked){
+                                    id.push($(this).val());
+                                    console.log(id);
+                                }
+                            }
+                        });
+                    }
+                   
                 });
                table.columns().every( function () {
                    var that = this;
@@ -459,6 +638,7 @@
                     myTable.ajax.reload( null, false );
                 });
             });
+
         </script>
 
     </body>
