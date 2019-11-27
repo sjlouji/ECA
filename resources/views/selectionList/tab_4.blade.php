@@ -15,7 +15,7 @@
                                             <option value="{{$years->year}}" selected>{{$years->year}}</option>
                                         @endforeach         
                                     </select>
-                                    <button type="button" class="btn btn-success selectionList" id="buttonSelectionList1" onclick="window.open('{{url('/selectionList/selectionlist1DC/')}}')" style="float:right;margin-right:25px;margin-top:10px"><span class="fa  fa-level-down"></span>Export Selected</button>
+                                    <button type="button" class="btn btn-success selectionList" id="buttonSelectionList1" onclick="window.open('{{url('/selectionList/selectionlist1RP/')}}')" style="float:right;margin-right:25px;margin-top:10px"><span class="fa  fa-level-down"></span>Export Selected</button>
                                     <button type="button" id="selectionListView4" class="btn btn-primary" style="float:right;margin-right:25px;margin-top:10px" ><span class="fa fa-exchange"></span> Change paid Status</button>
 
                                     <div class="box-body">

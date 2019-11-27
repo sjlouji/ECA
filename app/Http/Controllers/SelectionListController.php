@@ -11,6 +11,8 @@ use App\selection_list1__dalith_catholic;
 use App\selection_list1__open_quota;
 use App\selection_list1__roman_catholic;
 use App\selection_list1__rural_and__poor;
+use App\Department;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SelectionListController extends Controller
 {
@@ -105,18 +107,28 @@ class SelectionListController extends Controller
     }
 
     public function selectionlist1OQExports(){
-        
+        return Excel::download(new Exports\selectionList1ExportAll('selection_list1__open_quota'),'OpenQuota.xlsx');
     }
 
     public function selectionlist1RCExports(){
-        
+        return Excel::download(new Exports\selectionList1ExportAll('selection_list1__roman_catholic'),'RomanCatholic.xlsx');
     }
 
     public function selectionlist1DCExports(){
-        return Excel::download(new Exports\selectionlist1DCExports, 'dalith.csv');
+        return Excel::download(new Exports\selectionList1ExportAll('selection_list1__dalith_catholic'),'DalithCatholic.xlsx');
     }
 
     public function selectionlist1RPExports(){
-        
+        return Excel::download(new Exports\selectionList1ExportAll('selection_list1__rural_and__poor'),'RuralAndPoor.xlsx');
+    }
+
+    public function exports(){
+        $depname[0] = 'selection_list1__dalith_catholic';
+        $depname[1] = 'selection_list1__open_quota';
+        $depname[2] = 'selection_list1__roman_catholic';
+        $depname[3] = 'selection_list1__rural_and__poor';
+        foreach($depname as $depnamess){
+                return Excel::download(new Exports\selectionList1ExportAll($depnamess), $depnamess.'file.xlsx');
+        }
     }
 }

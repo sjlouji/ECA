@@ -173,7 +173,7 @@
                     </ol>
                 </section>
                 <div class="nav-tabs-custom">
-                        <button onclick="window.open('{{url('/department/add')}}')" type="button" class="btn btn-block btn-primary btn-normal" style="float:right;width:150px;margin-top: 10px;margin-bottom: 10px"><span class="fa  fa-level-down"></span> Export All Data </button>
+                        <button onclick="window.open('{{url('/selectionList/selectionlist1OQ/')}}'); window.open('{{url('/selectionList/selectionlist1RC/')}}'); window.open('{{url('/selectionList/selectionlist1DC/')}}'); window.open('{{url('/selectionList/selectionlist1RP/')}}');" type="button" class="btn btn-block btn-primary btn-normal" style="float:right;width:150px;margin-top: 10px;margin-bottom: 10px"><span class="fa  fa-level-down"></span> Export All Data </button>
                         <button onclick="window.open('{{url('/department/add')}}')" type="button" class="btn btn-block btn-primary btn-normal" style="float:right;width:200px;margin-top: 10px;margin-bottom: 10px"> Generate selection list 2 </button>
 
             <ul class="nav nav-tabs">
@@ -231,7 +231,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 
         <script>
-             $(document).ready(function(){
+            $(document).ready(function(){
      
                var table = $('#example1').DataTable({
                    "processing" : true,
