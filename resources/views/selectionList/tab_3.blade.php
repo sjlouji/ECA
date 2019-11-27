@@ -16,7 +16,7 @@
                                         @endforeach         
                                     </select>
                                     <button type="button" class="btn btn-success selectionList" id="buttonSelectionList1" onclick="window.open('{{url('/selectionList/selectionlist1DC/')}}')" style="float:right;margin-right:25px;margin-top:10px"><span class="fa  fa-level-down"></span>Export Selected</button>
-                                    <select name="paidornotpaind2" id="paidornotpaind" class="selectpicker" title="Paid Status Update" data-actions-box="true" >
+                                    <select name="paidornotpaind2" id="paidornotpaind2" class="selectpicker" title="Paid Status Update" data-actions-box="true" >
                                             <option value="Paid" selected>Paid</option>
                                             <option value="Not_paid" selected>Not Paid</option>
                                 </select>

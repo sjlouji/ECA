@@ -575,7 +575,7 @@
                                     var department_name = $('#department_select').val();
                                     var year_of_selection = $('#year_of_selection').val();
                                     var paidornotpaind = $('#paidornotpaind2').val();
-
+                                    console.log(paidornotpaind);
                                     $.ajax({
                                         type: 'POST',
                                         url: '{{ url("/selectionList/paidStatus") }}',

@@ -83,6 +83,7 @@ class SelectionListController extends Controller
             return response()->json(['status' => 'SUCCESS', 'message' => "Paid Status Updated Successfully"], 201);
         }
         elseif($request->quota=='selection_list1__rural_and__poors'){
+            Log::info($request->paidornotpaind.'------------');
                 foreach($request->id as $val){
                     $dep = selection_list1__rural_and__poor::find($val);
                     $dep->update(['paid_stauts'=>$request->paidornotpaind]);
