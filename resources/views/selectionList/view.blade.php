@@ -306,6 +306,8 @@
                                     id.push($(this).val());
                                     var department_name = $('#department_select').val();
                                     var year_of_selection = $('#year_of_selection').val();
+                                    var paidornotpaind = $('#paidornotpaind').val();
+
                                     $.ajax({
                                         type: 'POST',
                                         url: '{{ url("/selectionList/paidStatus") }}',
@@ -313,6 +315,7 @@
                                             id : id,
                                             department_name : department_name,
                                             year_of_selection : year_of_selection,
+                                            paidornotpaind : paidornotpaind,
                                             quota : 'selection_list1__open_quotas',
                                             _token        : '{!! csrf_token() !!}'
                                         },
@@ -448,6 +451,8 @@
                                     id.push($(this).val());
                                     var department_name = $('#department_select').val();
                                     var year_of_selection = $('#year_of_selection').val();
+                                    var paidornotpaind = $('#paidornotpaind1').val();
+
                                     $.ajax({
                                         type: 'POST',
                                         url: '{{ url("/selectionList/paidStatus") }}',
@@ -455,6 +460,7 @@
                                             id : id,
                                             department_name : department_name,
                                             year_of_selection : year_of_selection,
+                                            paidornotpaind : paidornotpaind,
                                             quota : 'selection_list1__roman_catholics',
                                             _token        : '{!! csrf_token() !!}'
                                         },
@@ -568,6 +574,8 @@
                                     id.push($(this).val());
                                     var department_name = $('#department_select').val();
                                     var year_of_selection = $('#year_of_selection').val();
+                                    var paidornotpaind = $('#paidornotpaind2').val();
+
                                     $.ajax({
                                         type: 'POST',
                                         url: '{{ url("/selectionList/paidStatus") }}',
@@ -575,6 +583,7 @@
                                             id : id,
                                             department_name : department_name,
                                             year_of_selection : year_of_selection,
+                                            paidornotpaind : paidornotpaind,
                                             quota : 'selection_list1__dalith_catholics',
                                             _token        : '{!! csrf_token() !!}'
                                         },
@@ -699,6 +708,8 @@
                                     id.push($(this).val());
                                     var department_name = $('#department_select').val();
                                     var year_of_selection = $('#year_of_selection').val();
+                                    var paidornotpaind = $('#paidornotpaind3').val();
+
                                     $.ajax({
                                         type: 'POST',
                                         url: '{{ url("/selectionList/paidStatus") }}',
@@ -706,6 +717,7 @@
                                             id : id,
                                             department_name : department_name,
                                             year_of_selection : year_of_selection,
+                                            paidornotpaind :paidornotpaind,
                                             quota : 'selection_list1__rural_and__poors',
                                             _token        : '{!! csrf_token() !!}'
                                         },

@@ -78,28 +78,28 @@ class SelectionListController extends Controller
         if($request->quota=='selection_list1__open_quotas'){
             foreach($request->id as $val){
                 $dep = selection_list1__open_quota::find($val);
-                $dep->update(['paid_stauts'=>'Paid']);
+                $dep->update(['paid_stauts'=>$request->paidornotpaind]);
             }
             return response()->json(['status' => 'SUCCESS', 'message' => "Paid Status Updated Successfully"], 201);
         }
         elseif($request->quota=='selection_list1__rural_and__poors'){
                 foreach($request->id as $val){
                     $dep = selection_list1__rural_and__poor::find($val);
-                    $dep->update(['paid_stauts'=>'Paid']);
+                    $dep->update(['paid_stauts'=>$request->paidornotpaind]);
                 }
                 return response()->json(['status' => 'SUCCESS', 'message' => "Paid Status Updated Successfully"], 201);
         }
         elseif($request->quota=='selection_list1__dalith_catholics'){
             foreach($request->id as $val){
                 $dep = selection_list1__dalith_catholic::find($val);
-                $dep->update(['paid_stauts'=>'Paid']);
+                $dep->update(['paid_stauts'=>$request->paidornotpaind]);
             }
             return response()->json(['status' => 'SUCCESS', 'message' => "Paid Status Updated Successfully"], 201);
         }
         elseif($request->quota=='selection_list1__roman_catholics'){
             foreach($request->id as $val){
                 $dep = selection_list1__roman_catholic::find($val);
-                $dep->update(['paid_stauts'=>'Paid']);
+                $dep->update(['paid_stauts'=>$request->paidornotpaind]);
             }
             return response()->json(['status' => 'SUCCESS', 'message' => "Paid Status Updated Successfully"], 201);
 

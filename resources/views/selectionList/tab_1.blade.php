@@ -16,7 +16,12 @@
                                         @endforeach         
                                     </select>
                                     <button type="button" class="btn btn-success selectionList" onclick="window.open('{{url('/selectionList/selectionlist1OQ')}}')" id="buttonSelectionList1" style="float:right;margin-right:25px;margin-top:10px"><span class="fa  fa-level-down"></span>Export Selected</button>
-                                    <button type="button" id="selectionListView1" class="btn btn-primary" style="float:right;margin-right:25px;margin-top:10px" ><span class="fa fa-exchange"></span> Change paid Status</button>
+                                        <select name="paidornotpaind" id="paidornotpaind" class="selectpicker" title="Paid Status Update" data-actions-box="true" >
+                                                    <option value="Paid" selected>Paid</option>
+                                                    <option value="Not_paid" selected>Not Paid</option>
+                                        </select>
+                                        <button type="button" id="selectionListView1" class="btn btn-primary" ><span class="fa fa-exchange"></span> Change paid Status</button>
+    
                                    
                                     <div class="box-body">
                                         <table id="example1" class="table table-bordered table-striped ">
