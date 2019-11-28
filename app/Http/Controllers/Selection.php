@@ -12,6 +12,7 @@ use App\selection_list1__dalith_catholic;
 use App\selection_list1__roman_catholic;
 use App\selection_list1__rural_and__poor;
 use App\selection_list1__open_quota;
+use App\selectionList2Input;
 use DB;
 use Yajra\DataTables\DataTables;
 
@@ -107,7 +108,7 @@ class Selection extends Controller
             $dalithCatholicData = new selection_list1__dalith_catholic();
             $ruralandpoorData = new selection_list1__rural_and__poor();
             $openquotaData = new selection_list1__open_quota();
-
+            $selectionList2Data = new selectionList2Input();
             foreach($dept_name as $dep){
                 //Checking if the department name in the Selection list and the database matches
                 if($sele->choice_1 == $dep['department_name']){
@@ -124,6 +125,14 @@ class Selection extends Controller
                                                         if($sele->catholic_or_non_catholic == 'NC'){
                                                             if($sele->poor_or_not_poor == 'P'){
                                                                 if(${$dep['department_name'].'total_seats_Rural_poor_students'} <=0){
+                                                                    $selectionList2Data->student_id = $sele->id;
+                                                                    $selectionList2Data->student_name = $sele->student_name;
+                                                                    $selectionList2Data->year_of_selection = $sele->year_of_addmission;
+                                                                    $selectionList2Data->department = 'null';
+                                                                    $selectionList2Data->cut_off = $sele->cut_off;
+                                                                    $selectionList2Data->paid_stauts = 'Not_paid';
+                                                                    $selectionList2Data->save();
+                                                                    Log::info($sele->student_name.''.'Not Selected');
                                                                     Log::info($sele->student_name.''.'Not selected');
                                                                 }elseif(${$dep['department_name'].'total_seats_Rural_poor_students'} >0){
                                                                     $ruralandpoorData->student_id = $sele->id;
@@ -231,6 +240,15 @@ class Selection extends Controller
                                                 if($sele->catholic_or_non_catholic == 'NC'){
                                                     if($sele->poor_or_not_poor == 'P'){
                                                         if(${$dep['department_name'].'total_seats_Rural_poor_students'} <=0){
+                                                            $selectionList2Data->student_id = $sele->id;
+                                                            $selectionList2Data->student_name = $sele->student_name;
+                                                            $selectionList2Data->year_of_selection = $sele->year_of_addmission;
+                                                            $selectionList2Data->department = 'null';
+                                                            $selectionList2Data->cut_off = $sele->cut_off;
+                                                            $selectionList2Data->paid_stauts = 'Not_paid';
+                                                            $selectionList2Data->save();
+
+                                                            Log::info($sele->student_name.''.'Not Selected');
                                                             Log::info($sele->stuent_name.''.'Not selected');
                                                         }elseif(${$dep['department_name'].'total_seats_Rural_poor_students'} >0){
                                                             $ruralandpoorData->student_id = $sele->id;
@@ -263,6 +281,14 @@ class Selection extends Controller
                                                             ${$dep['department_name'].'total_seats_Dalit_catholic'}--;
                                                             Log::info(${$dep['department_name'].'total_seats_Dalit_catholic'});
                                                         }else{
+                                                            $selectionList2Data->student_id = $sele->id;
+                                                            $selectionList2Data->student_name = $sele->student_name;
+                                                            $selectionList2Data->year_of_selection = $sele->year_of_addmission;
+                                                            $selectionList2Data->department = 'null';
+                                                            $selectionList2Data->cut_off = $sele->cut_off;
+                                                            $selectionList2Data->paid_stauts = 'Not_paid';
+                                                            $selectionList2Data->save();
+
                                                             Log::info($sele->student_name.''.'Not Selected');
                                                         }
                                                     }elseif(${$dep['department_name'].'total_seats_Roman_catholic'} > 0){
